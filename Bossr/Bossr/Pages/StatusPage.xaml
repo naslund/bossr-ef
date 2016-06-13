@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:XLabs.Forms.Controls;assembly=XLabs.Forms"
+             x:Class="Bossr.Pages.StatusPage"
+             Title="Status">
+  <ScrollView>
+    <StackLayout>
+      <StackLayout Padding="10">
+        <controls:ExtendedPicker ItemsSource="{Binding Worlds}" Title="World" SelectedItem="{Binding SelectedWorld, Mode=TwoWay}">
+          <controls:ExtendedPicker.DisplayProperty>Name</controls:ExtendedPicker.DisplayProperty>
+        </controls:ExtendedPicker>
+      </StackLayout>
+
+      <ListView x:Name="ListView" ItemsSource="{Binding Statuses}">
+        <ListView.ItemTemplate>
+          <DataTemplate>
+            <TextCell Text="{Binding CreatureName}" Detail="{Binding TimeLeft}" />
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+    </StackLayout>
+  </ScrollView>
+</ContentPage>
