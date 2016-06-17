@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Xamarin.Forms;
 
 namespace Bossr.Lib
 {
@@ -23,5 +24,14 @@ namespace Bossr.Lib
         public DateTime ExpectedSpawnDateMax { get; set; }
 
         public string TimeLeft => $"{Math.Ceiling((DateTime.SpecifyKind(ExpectedSpawnDateMax, DateTimeKind.Utc) - DateTime.UtcNow).TotalHours)} hours left";
+
+        public Color CategoryColor
+        {
+            get
+            {
+                string[] colors = CategoryColorRGB.Split(',');
+                return Color.FromRgb(int.Parse(colors[0]), int.Parse(colors[1]), int.Parse(colors[2]));
+            }
+        }
     }
 }

@@ -4,21 +4,31 @@
              xmlns:controls="clr-namespace:XLabs.Forms.Controls;assembly=XLabs.Forms"
              x:Class="Bossr.Pages.StatusPage"
              Title="Status">
-  <ScrollView>
-    <StackLayout>
-      <StackLayout Padding="10">
-        <controls:ExtendedPicker ItemsSource="{Binding Worlds}" Title="World" SelectedItem="{Binding SelectedWorld, Mode=TwoWay}">
-          <controls:ExtendedPicker.DisplayProperty>Name</controls:ExtendedPicker.DisplayProperty>
-        </controls:ExtendedPicker>
-      </StackLayout>
-
-      <ListView x:Name="ListView" ItemsSource="{Binding Statuses}">
-        <ListView.ItemTemplate>
-          <DataTemplate>
-            <TextCell Text="{Binding CreatureName}" Detail="{Binding TimeLeft}" />
-          </DataTemplate>
-        </ListView.ItemTemplate>
-      </ListView>
+  <StackLayout>
+    <StackLayout Padding="10">
+      <controls:ExtendedPicker ItemsSource="{Binding Worlds}" Title="World" SelectedItem="{Binding SelectedWorld, Mode=TwoWay}">
+        <controls:ExtendedPicker.DisplayProperty>Name</controls:ExtendedPicker.DisplayProperty>
+      </controls:ExtendedPicker>
     </StackLayout>
-  </ScrollView>
+
+    <ListView x:Name="ListView" ItemsSource="{Binding Statuses}" IsPullToRefreshEnabled="True" Refreshing="ListView_OnRefreshing" HasUnevenRows="True" ItemTapped="ListView_OnItemTapped">
+      <ListView.ItemTemplate>
+        <DataTemplate>
+          <ViewCell>
+            <StackLayout>
+              <StackLayout Orientation="Horizontal">
+                <StackLayout Orientation="Vertical" BackgroundColor="{Binding CategoryColor}" WidthRequest="100" >
+                  <Label Text="{Binding CategoryName}" TextColor="White" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
+                </StackLayout>
+                <StackLayout Orientation="Vertical" Padding="5">
+                  <Label Text="{Binding CreatureName}" />
+                  <Label Text="{Binding TimeLeft}" />
+                </StackLayout>
+              </StackLayout>
+            </StackLayout>
+          </ViewCell>
+        </DataTemplate>
+      </ListView.ItemTemplate>
+    </ListView>
+  </StackLayout>
 </ContentPage>
