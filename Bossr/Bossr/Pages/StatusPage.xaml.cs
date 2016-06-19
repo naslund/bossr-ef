@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Bossr.ViewModels;
 using Xamarin.Forms;
 
@@ -27,7 +23,6 @@ namespace Bossr.Pages
 
         private async void ListView_OnRefreshing(object sender, EventArgs e)
         {
-            ((ListView)sender).IsRefreshing = false;
             await StatusPageViewModel.ReadStatuses();
         }
 

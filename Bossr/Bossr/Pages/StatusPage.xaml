@@ -1,17 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:controls="clr-namespace:XLabs.Forms.Controls;assembly=XLabs.Forms"
+             xmlns:freshEssentials="clr-namespace:FreshEssentials;assembly=FreshEssentials"
              x:Class="Bossr.Pages.StatusPage"
              Title="Status">
   <StackLayout>
-    <StackLayout Padding="10">
-      <ActivityIndicator IsRunning="{Binding AreWorldsLoading}" IsVisible="{Binding AreWorldsLoading}" />
-      <controls:ExtendedPicker x:Name="WorldPicker" ItemsSource="{Binding Worlds}" Title="World" SelectedItem="{Binding SelectedWorld, Mode=TwoWay}" IsVisible="{Binding AreWorldsLoaded}">
-        <controls:ExtendedPicker.DisplayProperty>Name</controls:ExtendedPicker.DisplayProperty>
-      </controls:ExtendedPicker>
-    </StackLayout>
-    
+    <ActivityIndicator IsVisible="{Binding AreWorldsLoading}" IsRunning="{Binding AreWorldsLoading}" Margin="10" />
+    <freshEssentials:BindablePicker ItemsSource="{Binding Worlds}" SelectedItem="{Binding SelectedWorld}" Title="Select World" DisplayProperty="Name" Margin="10" IsVisible="{Binding AreWorldsLoaded}" />
+
     <ListView x:Name="ListView" ItemsSource="{Binding Statuses}" IsPullToRefreshEnabled="True" Refreshing="ListView_OnRefreshing" HasUnevenRows="True" ItemTapped="ListView_OnItemTapped" IsRefreshing="{Binding AreStatusesLoading}" SeparatorVisibility="None">
       <ListView.ItemTemplate>
         <DataTemplate>

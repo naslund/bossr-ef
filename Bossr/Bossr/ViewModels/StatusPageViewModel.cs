@@ -12,8 +12,8 @@ namespace Bossr.ViewModels
         private List<Status> statuses;
         private List<World> worlds;
         private World selectedWorld;
-        private bool _areStatusesLoading;
-        private bool _areWorldsLoading;
+        private bool areStatusesLoading;
+        private bool areWorldsLoading;
 
         public List<Status> Statuses
         {
@@ -46,29 +46,28 @@ namespace Bossr.ViewModels
             }
         }
 
-
         public bool AreStatusesLoading
         {
-            get { return _areStatusesLoading; }
+            get { return areStatusesLoading; }
             set
             {
-                _areStatusesLoading = value;
+                areStatusesLoading = value;
                 OnPropertyChanged(nameof(AreStatusesLoading));
             }
         }
 
         public bool AreWorldsLoading
         {
-            get { return _areWorldsLoading; }
+            get { return areWorldsLoading; }
             set
             {
-                _areWorldsLoading = value;
+                areWorldsLoading = value;
                 OnPropertyChanged(nameof(AreWorldsLoading));
                 OnPropertyChanged(nameof(AreWorldsLoaded));
             }
         }
 
-        public bool AreWorldsLoaded => _areWorldsLoading == false;
+        public bool AreWorldsLoaded => AreWorldsLoading == false;
 
         public async Task ReadStatuses()
         {
