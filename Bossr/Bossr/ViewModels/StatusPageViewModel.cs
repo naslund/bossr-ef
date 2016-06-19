@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using Bossr.Annotations;
 using Bossr.Lib;
 
@@ -11,6 +12,8 @@ namespace Bossr.ViewModels
         private List<Status> statuses;
         private List<World> worlds;
         private World selectedWorld;
+        private bool _areStatusesLoading;
+        private bool _areWorldsLoading;
 
         public List<Status> Statuses
         {
@@ -43,20 +46,44 @@ namespace Bossr.ViewModels
             }
         }
 
-        public StatusPageViewModel()
+
+        public bool AreStatusesLoading
         {
-            ReadWorlds();
+            get { return _areStatusesLoading; }
+            set
+            {
+                _areStatusesLoading = value;
+                OnPropertyChanged(nameof(AreStatusesLoading));
+            }
         }
 
-        public async void ReadStatuses()
+        public bool AreWorldsLoading
         {
+            get { return _areWorldsLoading; }
+            set
+            {
+                _areWorldsLoading = value;
+                OnPropertyChanged(nameof(AreWorldsLoading));
+                OnPropertyChanged(nameof(AreWorldsLoaded));
+            }
+        }
+
+        public bool AreWorldsLoaded => _areWorldsLoading == false;
+
+        public async Task ReadStatuses()
+        {
+            AreStatusesLoading = true;
+            Statuses = null;
             if (SelectedWorld != null)
                 Statuses = await App.RestService.ReadStatusAsync(SelectedWorld.Id);
+            AreStatusesLoading = false;
         }
 
-        public async void ReadWorlds()
+        public async Task ReadWorlds()
         {
+            AreWorldsLoading = true;
             Worlds = await App.RestService.ReadWorldsAsync();
+            AreWorldsLoading = false;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using Humanizer;
 using Xamarin.Forms;
 
 namespace Bossr.Lib
@@ -24,6 +26,8 @@ namespace Bossr.Lib
         public DateTime ExpectedSpawnDateMax { get; set; }
 
         public string TimeLeft => $"{Math.Ceiling((DateTime.SpecifyKind(ExpectedSpawnDateMax, DateTimeKind.Utc) - DateTime.UtcNow).TotalHours)} hours left";
+
+        public string TimeLeftH => $"{(DateTime.SpecifyKind(ExpectedSpawnDateMax, DateTimeKind.Utc) - DateTime.UtcNow).Humanize(2, CultureInfo.InvariantCulture)} remaining";
 
         public Color CategoryColor
         {

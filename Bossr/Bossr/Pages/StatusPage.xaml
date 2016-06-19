@@ -6,23 +6,24 @@
              Title="Status">
   <StackLayout>
     <StackLayout Padding="10">
-      <controls:ExtendedPicker ItemsSource="{Binding Worlds}" Title="World" SelectedItem="{Binding SelectedWorld, Mode=TwoWay}">
+      <ActivityIndicator IsRunning="{Binding AreWorldsLoading}" IsVisible="{Binding AreWorldsLoading}" />
+      <controls:ExtendedPicker x:Name="WorldPicker" ItemsSource="{Binding Worlds}" Title="World" SelectedItem="{Binding SelectedWorld, Mode=TwoWay}" IsVisible="{Binding AreWorldsLoaded}">
         <controls:ExtendedPicker.DisplayProperty>Name</controls:ExtendedPicker.DisplayProperty>
       </controls:ExtendedPicker>
     </StackLayout>
-
-    <ListView x:Name="ListView" ItemsSource="{Binding Statuses}" IsPullToRefreshEnabled="True" Refreshing="ListView_OnRefreshing" HasUnevenRows="True" ItemTapped="ListView_OnItemTapped">
+    
+    <ListView x:Name="ListView" ItemsSource="{Binding Statuses}" IsPullToRefreshEnabled="True" Refreshing="ListView_OnRefreshing" HasUnevenRows="True" ItemTapped="ListView_OnItemTapped" IsRefreshing="{Binding AreStatusesLoading}">
       <ListView.ItemTemplate>
         <DataTemplate>
           <ViewCell>
             <StackLayout>
               <StackLayout Orientation="Horizontal">
-                <StackLayout Orientation="Vertical" BackgroundColor="{Binding CategoryColor}" WidthRequest="100" >
-                  <Label Text="{Binding CategoryName}" TextColor="White" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
+                <StackLayout BackgroundColor="{Binding CategoryColor}" WidthRequest="100">
+                  <Label Text="{Binding CategoryName}" TextColor="White" FontAttributes="Bold" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
                 </StackLayout>
-                <StackLayout Orientation="Vertical" Padding="5">
-                  <Label Text="{Binding CreatureName}" />
-                  <Label Text="{Binding TimeLeft}" />
+                <StackLayout Padding="5">
+                  <Label Text="{Binding CreatureName}" TextColor="#212121" />
+                  <Label Text="{Binding TimeLeftH}" TextColor="#727272" />
                 </StackLayout>
               </StackLayout>
             </StackLayout>

@@ -18,10 +18,17 @@ namespace Bossr.Pages
             BindingContext = new StatusPageViewModel();
         }
 
-        private void ListView_OnRefreshing(object sender, EventArgs e)
+        protected override async void OnAppearing()
         {
-            StatusPageViewModel.ReadStatuses();
-            ((ListView) sender).IsRefreshing = false;
+            base.OnAppearing();
+
+            await StatusPageViewModel.ReadWorlds();
+        }
+
+        private async void ListView_OnRefreshing(object sender, EventArgs e)
+        {
+            ((ListView)sender).IsRefreshing = false;
+            await StatusPageViewModel.ReadStatuses();
         }
 
         private void ListView_OnItemTapped(object sender, ItemTappedEventArgs e)
