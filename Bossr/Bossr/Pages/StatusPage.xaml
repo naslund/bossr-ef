@@ -12,13 +12,13 @@
       </controls:ExtendedPicker>
     </StackLayout>
     
-    <ListView x:Name="ListView" ItemsSource="{Binding Statuses}" IsPullToRefreshEnabled="True" Refreshing="ListView_OnRefreshing" HasUnevenRows="True" ItemTapped="ListView_OnItemTapped" IsRefreshing="{Binding AreStatusesLoading}">
+    <ListView x:Name="ListView" ItemsSource="{Binding Statuses}" IsPullToRefreshEnabled="True" Refreshing="ListView_OnRefreshing" HasUnevenRows="True" ItemTapped="ListView_OnItemTapped" IsRefreshing="{Binding AreStatusesLoading}" SeparatorVisibility="None">
       <ListView.ItemTemplate>
         <DataTemplate>
           <ViewCell>
             <StackLayout>
               <StackLayout Orientation="Horizontal">
-                <StackLayout BackgroundColor="{Binding CategoryColor}" WidthRequest="100">
+                <StackLayout BackgroundColor="{Binding CategoryColor}" WidthRequest="100" MinimumWidthRequest="100">
                   <Label Text="{Binding CategoryName}" TextColor="White" FontAttributes="Bold" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
                 </StackLayout>
                 <StackLayout Padding="5">
