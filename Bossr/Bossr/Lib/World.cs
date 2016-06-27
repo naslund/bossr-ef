@@ -24,5 +24,7 @@ namespace Bossr.Lib
         public int LastDayDeaths { get; set; }
         public int LastDayKills { get; set; }
         public DateTime LastScrape { get; set; }
+
+        public string Info => $"{PvpType.Name} | {Location.Name}";
     }
 }

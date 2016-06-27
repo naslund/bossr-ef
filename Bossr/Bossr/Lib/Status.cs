@@ -24,10 +24,10 @@ namespace Bossr.Lib
         public int PercentElapsed { get; set; }
         public DateTime ExpectedSpawnDateMin { get; set; }
         public DateTime ExpectedSpawnDateMax { get; set; }
-
-        public string TimeLeft => $"{Math.Ceiling((DateTime.SpecifyKind(ExpectedSpawnDateMax, DateTimeKind.Utc) - DateTime.UtcNow).TotalHours)} hours left";
-
+        
         public string TimeLeftH => $"{(DateTime.SpecifyKind(ExpectedSpawnDateMax, DateTimeKind.Utc) - DateTime.UtcNow).Humanize(2, CultureInfo.InvariantCulture)} remaining";
+
+        public string TimeBeforeSpawnable => $"in {(DateTime.SpecifyKind(ExpectedSpawnDateMin, DateTimeKind.Utc) - DateTime.UtcNow).Humanize(2, CultureInfo.InvariantCulture)}";
 
         public Color CategoryColor
         {

@@ -38,6 +38,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Lib\Category.cs" />
+    <Compile Include="Lib\Creature.cs" />
+    <Compile Include="Lib\Kill.cs" />
     <Compile Include="Navigation\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -45,15 +48,31 @@
       <DependentUpon>MasterPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Navigation\MasterPageItem.cs" />
+    <Compile Include="Pages\RecentPage.xaml.cs">
+      <DependentUpon>RecentPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\UpcomingPage.xaml.cs">
+      <DependentUpon>UpcomingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\UpcomingPageViewModel.cs" />
+    <Compile Include="ViewModels\RecentPageViewModel.cs" />
+    <Compile Include="Pages\SpawnablePage.xaml.cs">
+      <DependentUpon>SpawnablePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\StatusPage.xaml.cs">
       <DependentUpon>StatusPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\WorldsPage.xaml.cs">
+      <DependentUpon>WorldsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\RestService.cs" />
     <Compile Include="Lib\Status.cs" />
     <Compile Include="Lib\World.cs" />
+    <Compile Include="ViewModels\SpawnablePageViewModel.cs" />
     <Compile Include="ViewModels\StatusPageViewModel.cs" />
+    <Compile Include="ViewModels\WorldsPageViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Navigation\MainPage.xaml">
@@ -120,7 +139,31 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Pages\SpawnablePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Pages\WorldsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="Pages\StatusPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Pages\RecentPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Pages\UpcomingPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

@@ -17,7 +17,7 @@ namespace Bossr.Navigation
                 new MasterPageItem
                 {
                     Title = "Status",
-                    TargetType = typeof(StatusPage)
+                    TargetType = typeof(WorldsPage)
                 }
             };
 

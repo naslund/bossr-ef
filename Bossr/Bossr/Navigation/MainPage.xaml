@@ -12,7 +12,7 @@
   <MasterDetailPage.Detail>
     <NavigationPage>
       <x:Arguments>
-        <pages:StatusPage />
+        <pages:WorldsPage />
       </x:Arguments>
     </NavigationPage>
   </MasterDetailPage.Detail>
