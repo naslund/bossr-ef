@@ -16,6 +16,7 @@ namespace Bossr.Services
         public List<Status> Upcoming { get; private set; } = new List<Status>();
         public List<World> Worlds { get; private set; } = new List<World>();
         public List<Kill> Recent { get; private set; } = new List<Kill>();
+        public List<Creature> Creatures { get; private set; } = new List<Creature>();
 
         public RestService()
         {
@@ -96,6 +97,25 @@ namespace Bossr.Services
             }
 
             return Recent;
+        }
+
+        public async Task<List<Creature>> ReadCreaturesAsync()
+        {
+            try
+            {
+                var response = await client.GetAsync(uri + "creatures?$select=Id,Name,Monitored,CategoryId&$orderby=Monitored+desc,CategoryId,Name");
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    Creatures = JsonConvert.DeserializeObject<List<Creature>>(content);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Error: " + ex);
+            }
+
+            return Creatures;
         }
     }
 }

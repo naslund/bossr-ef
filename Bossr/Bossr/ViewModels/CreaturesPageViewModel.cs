@@ -10,7 +10,7 @@ using Bossr.Lib;
 
 namespace Bossr.ViewModels
 {
-    public class WorldsPageViewModel : INotifyPropertyChanged
+    public class CreaturesPageViewModel : INotifyPropertyChanged
     {
         private bool _isLoading;
         public bool IsLoading
@@ -23,21 +23,21 @@ namespace Bossr.ViewModels
             }
         }
 
-        private List<World> worlds;
-        public List<World> Worlds
+        private List<Creature> _creatures;
+        public List<Creature> Creatures
         {
-            get { return worlds; }
+            get { return _creatures; }
             set
             {
-                worlds = value;
-                OnPropertyChanged(nameof(Worlds));
+                _creatures = value;
+                OnPropertyChanged(nameof(Creatures));
             }
         }
 
-        public async Task ReadWorlds()
+        public async Task ReadCreatures()
         {
             IsLoading = true;
-            Worlds = await App.RestService.ReadWorldsAsync();
+            Creatures = await App.RestService.ReadCreaturesAsync();
             IsLoading = false;
         }
 

@@ -48,12 +48,16 @@
       <DependentUpon>MasterPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Navigation\MasterPageItem.cs" />
+    <Compile Include="Pages\CreaturesPage.xaml.cs">
+      <DependentUpon>CreaturesPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\RecentPage.xaml.cs">
       <DependentUpon>RecentPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\UpcomingPage.xaml.cs">
       <DependentUpon>UpcomingPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\CreaturesPageViewModel.cs" />
     <Compile Include="ViewModels\UpcomingPageViewModel.cs" />
     <Compile Include="ViewModels\RecentPageViewModel.cs" />
     <Compile Include="Pages\SpawnablePage.xaml.cs">
@@ -164,6 +168,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Pages\UpcomingPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Pages\CreaturesPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

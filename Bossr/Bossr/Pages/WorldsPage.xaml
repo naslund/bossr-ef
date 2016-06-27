@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Bossr.Pages.WorldsPage"
              Title="Status">
-  <ListView x:Name="ListView" ItemsSource="{Binding Worlds}" IsPullToRefreshEnabled="True" Refreshing="ListView_OnRefreshing" ItemTapped="ListView_OnItemTapped" IsRefreshing="{Binding AreWorldsLoading}">
+  <ListView x:Name="ListView" ItemsSource="{Binding Worlds}" IsPullToRefreshEnabled="True" Refreshing="ListView_OnRefreshing" ItemTapped="ListView_OnItemTapped" IsRefreshing="{Binding IsLoading}">
     <ListView.ItemTemplate>
       <DataTemplate>
         <TextCell Text="{Binding Name}" TextColor="#212121" Detail="{Binding Info}" DetailColor="#727272" />

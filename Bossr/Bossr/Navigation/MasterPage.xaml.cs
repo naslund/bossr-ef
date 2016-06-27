@@ -18,6 +18,11 @@ namespace Bossr.Navigation
                 {
                     Title = "Status",
                     TargetType = typeof(WorldsPage)
+                },
+                new MasterPageItem
+                {
+                    Title = "Creatures",
+                    TargetType = typeof(CreaturesPage)
                 }
             };
 
