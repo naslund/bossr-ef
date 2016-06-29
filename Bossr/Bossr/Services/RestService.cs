@@ -103,7 +103,7 @@ namespace Bossr.Services
         {
             try
             {
-                var response = await client.GetAsync(uri + "creatures?$select=Id,Name,Monitored,CategoryId&$orderby=Monitored+desc,CategoryId,Name");
+                var response = await client.GetAsync(uri + "creatures?$expand=Category&$select=Id,Name,Monitored,CategoryId&$orderby=Monitored+desc,CategoryId,Name");
                 if (response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStringAsync();

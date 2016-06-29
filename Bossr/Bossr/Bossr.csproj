@@ -57,6 +57,7 @@
     <Compile Include="Pages\UpcomingPage.xaml.cs">
       <DependentUpon>UpcomingPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utilities\ObservableCollectionGroup.cs" />
     <Compile Include="ViewModels\CreaturesPageViewModel.cs" />
     <Compile Include="ViewModels\UpcomingPageViewModel.cs" />
     <Compile Include="ViewModels\RecentPageViewModel.cs" />

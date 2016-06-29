@@ -9,5 +9,7 @@ namespace Bossr.Lib
         public int HoursBetweenEachSpawnMin { get; set; }
         public int HoursBetweenEachSpawnMax { get; set; }
         public string CategoryId { get; set; }
+
+        public string MonitoredStatus => Monitored ? "Monitored" : "Unmonitored";
     }
 }

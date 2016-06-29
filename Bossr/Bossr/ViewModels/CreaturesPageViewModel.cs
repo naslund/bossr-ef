@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -7,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Bossr.Annotations;
 using Bossr.Lib;
+using Bossr.Utilities;
 
 namespace Bossr.ViewModels
 {
@@ -34,10 +36,35 @@ namespace Bossr.ViewModels
             }
         }
 
+        private ObservableCollection<ObservableGroupCollection<Category, Creature>> _creaturesGrouped;
+
+        public ObservableCollection<ObservableGroupCollection<Category, Creature>> CreaturesGrouped
+        {
+            get { return _creaturesGrouped; }
+            set
+            {
+                _creaturesGrouped = value;
+                OnPropertyChanged(nameof(CreaturesGrouped));
+            }
+        }
+
+
         public async Task ReadCreatures()
         {
             IsLoading = true;
+
             Creatures = await App.RestService.ReadCreaturesAsync();
+
+            var v = Creatures
+                .OrderByDescending(x => x.Monitored)
+                .ThenBy(x => x.Category.Name)
+                .ThenBy(x => x.Name)
+                .GroupBy(x => x.Category)
+                .Select(x => new ObservableGroupCollection<Category, Creature>(x))
+                .ToList();
+            
+            CreaturesGrouped = new ObservableCollection<ObservableGroupCollection<Category, Creature>>(v);
+
             IsLoading = false;
         }
 
@@ -48,5 +75,11 @@ namespace Bossr.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+    }
+
+    public class GroupedCreatures : ObservableCollection<Creature>
+    {
+        public string LongName { get; set; }
+        public string ShortName { get; set; }
     }
 }
