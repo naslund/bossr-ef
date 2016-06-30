@@ -1,9 +1,11 @@
+using System;
+
 namespace Bossr.Lib
 {
     public class Creature
     {
         public Category Category { get; set; }
-        public string Id { get; set; }
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public bool Monitored { get; set; }
         public int HoursBetweenEachSpawnMin { get; set; }

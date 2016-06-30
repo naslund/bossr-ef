@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Bossr.Pages.CreaturesPage"
              Title="Creatures">
-  <ListView IsGroupingEnabled="true" ItemsSource="{Binding CreaturesGrouped}" GroupDisplayBinding="{Binding Key.Name}" GroupShortNameBinding="{Binding Key.Name}" SeparatorVisibility="None">
+  <ListView IsGroupingEnabled="true" ItemsSource="{Binding CreaturesGrouped}" GroupDisplayBinding="{Binding Key.Name}" GroupShortNameBinding="{Binding Key.Name}" SeparatorVisibility="None" ItemTapped="ListView_OnItemTapped" Refreshing="ListView_OnRefreshing" IsPullToRefreshEnabled="True" IsRefreshing="{Binding IsLoading}">
     <ListView.GroupHeaderTemplate>
       <DataTemplate>
         <ViewCell>
@@ -15,7 +15,7 @@
     </ListView.GroupHeaderTemplate>
     <ListView.ItemTemplate>
       <DataTemplate>
-        <TextCell Text="{Binding Name}" Detail="{Binding MonitoredStatus}" />
+        <TextCell Text="{Binding Name}" TextColor="#212121" Detail="{Binding MonitoredStatus}" DetailColor="#727272" />
       </DataTemplate>
     </ListView.ItemTemplate>
   </ListView>

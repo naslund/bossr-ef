@@ -5,7 +5,7 @@ namespace Bossr.Lib
 {
     public class Category : IEquatable<Category>
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public int ColorR { get; set; }
         public int ColorG { get; set; }

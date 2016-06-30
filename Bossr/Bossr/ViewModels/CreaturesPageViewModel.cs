@@ -76,10 +76,4 @@ namespace Bossr.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
-
-    public class GroupedCreatures : ObservableCollection<Creature>
-    {
-        public string LongName { get; set; }
-        public string ShortName { get; set; }
-    }
 }

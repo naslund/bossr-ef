@@ -32,6 +32,7 @@ namespace Bossr.Pages
 
         private void ListView_OnItemTapped(object sender, ItemTappedEventArgs e)
         {
+            ((ListView)sender).SelectedItem = null;
         }
     }
 }
