@@ -7,19 +7,14 @@ using System.Threading.Tasks;
 
 namespace Bossr.Utilities
 {
-    public class ObservableGroupCollection<S, T> : ObservableCollection<T>
+    public class ObservableGroupCollection<TKey, T> : ObservableCollection<T>
     {
-        private readonly S _key;
+        public TKey Key { get; }
 
-        public ObservableGroupCollection(IGrouping<S, T> group)
+        public ObservableGroupCollection(IGrouping<TKey, T> group)
             : base(group)
         {
-            _key = group.Key;
-        }
-
-        public S Key
-        {
-            get { return _key; }
+            Key = group.Key;
         }
     }
 }

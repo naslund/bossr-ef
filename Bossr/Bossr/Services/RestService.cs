@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Bossr.Lib;
@@ -10,112 +11,76 @@ namespace Bossr.Services
 {
     public class RestService
     {
-        HttpClient client;
-        private static readonly Uri uri = new Uri("http://datecheckerapi.azurewebsites.net/");
-        public List<Status> Spawnable { get; private set; } = new List<Status>();
-        public List<Status> Upcoming { get; private set; } = new List<Status>();
-        public List<World> Worlds { get; private set; } = new List<World>();
-        public List<Kill> Recent { get; private set; } = new List<Kill>();
-        public List<Creature> Creatures { get; private set; } = new List<Creature>();
-
-        public RestService()
-        {
-            client = new HttpClient();
-        }
+        private readonly HttpClient client = new HttpClient();
+        private readonly Uri uri = new Uri("http://datecheckerapi.azurewebsites.net/");
 
         public async Task<List<Status>> ReadSpawnableAsync(Guid worldId)
         {
-            try
+            HttpResponseMessage response = await client.GetAsync(uri + "status?worldId=" + worldId + "&$filter=CanSpawn+eq+true");
+            if (response.IsSuccessStatusCode)
             {
-                var response = await client.GetAsync(uri + "status?worldId=" + worldId + "&$filter=CanSpawn+eq+true");
-                if (response.IsSuccessStatusCode)
-                {
-                    var content = await response.Content.ReadAsStringAsync();
-                    Spawnable = JsonConvert.DeserializeObject<List<Status>>(content);
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("Error: " + ex);
+                var content = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<List<Status>>(content);
             }
 
-            return Spawnable;
+            return null;
         }
 
         public async Task<List<Status>> ReadUpcomingAsync(Guid worldId)
         {
-            try
+            HttpResponseMessage response = await client.GetAsync(uri + "status?worldId=" + worldId + "&$filter=CanSpawn+eq+false");
+            if (response.IsSuccessStatusCode)
             {
-                var response = await client.GetAsync(uri + "status?worldId=" + worldId + "&$filter=CanSpawn+eq+false&$orderby=ExpectedSpawnDateMin");
-                if (response.IsSuccessStatusCode)
-                {
-                    var content = await response.Content.ReadAsStringAsync();
-                    Upcoming = JsonConvert.DeserializeObject<List<Status>>(content);
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("Error: " + ex);
+                var content = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<List<Status>>(content)
+                    .OrderBy(x => x.ExpectedSpawnDateMin)
+                    .ToList();
             }
 
-            return Upcoming;
+            return null;
         }
 
         public async Task<List<World>> ReadWorldsAsync()
         {
-            try
+            HttpResponseMessage response = await client.GetAsync(uri + "worlds?$orderby=Name&$expand=Location,PvpType");
+            if (response.IsSuccessStatusCode)
             {
-                var response = await client.GetAsync(uri + "worlds?$orderby=Name&$expand=Location,PvpType");
-                if (response.IsSuccessStatusCode)
-                {
-                    var content = await response.Content.ReadAsStringAsync();
-                    Worlds = JsonConvert.DeserializeObject<List<World>>(content);
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("Error: " + ex);
+                var content = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<List<World>>(content);
             }
 
-            return Worlds;
+            return null;
         }
 
         public async Task<List<Kill>> ReadRecentAsync(Guid worldId)
         {
-            try
+            HttpResponseMessage response = await client.GetAsync(uri + "recent?worldId=" + worldId + "&$expand=Creature($expand=Category)");
+            if (response.IsSuccessStatusCode)
             {
-                var response = await client.GetAsync(uri + "recent?worldId=" + worldId + "&$expand=Creature($expand=Category)&$orderby=SpawnedAtMin desc,Creature/Category/Name");
-                if (response.IsSuccessStatusCode)
-                {
-                    var content = await response.Content.ReadAsStringAsync();
-                    Recent = JsonConvert.DeserializeObject<List<Kill>>(content);
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("Error: " + ex);
+                var content = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<List<Kill>>(content)
+                    .OrderByDescending(x => x.SpawnedAtMin)
+                    .ThenBy(x => x.Creature.Category.Name)
+                    .ToList();
             }
 
-            return Recent;
+            return null;
         }
 
         public async Task<List<Creature>> ReadCreaturesAsync()
         {
-            try
+            HttpResponseMessage response = await client.GetAsync(uri + "creatures?$expand=Category&$select=Id,Name,Monitored,CategoryId");
+            if (response.IsSuccessStatusCode)
             {
-                var response = await client.GetAsync(uri + "creatures?$expand=Category&$select=Id,Name,Monitored,CategoryId&$orderby=Monitored+desc,CategoryId,Name");
-                if (response.IsSuccessStatusCode)
-                {
-                    var content = await response.Content.ReadAsStringAsync();
-                    Creatures = JsonConvert.DeserializeObject<List<Creature>>(content);
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("Error: " + ex);
+                var content = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<List<Creature>>(content)
+                    .OrderByDescending(x => x.Monitored)
+                    .ThenBy(x => x.CategoryId)
+                    .ThenBy(x => x.Name)
+                    .ToList();
             }
 
-            return Creatures;
+            return null;
         }
     }
 }
