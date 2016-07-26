@@ -21,6 +21,6 @@ namespace Bossr.Lib
 
         public Color CategoryColor => Color.FromRgb(Creature.Category.ColorR, Creature.Category.ColorG, Creature.Category.ColorB);
 
-        public string TimeAgo => $"{(DateTime.SpecifyKind(SpawnedAtMin, DateTimeKind.Utc) - DateTime.UtcNow).Humanize(2, CultureInfo.InvariantCulture)} ago";
+        public string TimeAgo => $"{(SpawnedAtMax - DateTime.UtcNow).Humanize(2, CultureInfo.InvariantCulture)} ago";
     }
 }

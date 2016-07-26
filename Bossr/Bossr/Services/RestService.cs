@@ -73,11 +73,7 @@ namespace Bossr.Services
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<List<Creature>>(content)
-                    .OrderByDescending(x => x.Monitored)
-                    .ThenBy(x => x.CategoryId)
-                    .ThenBy(x => x.Name)
-                    .ToList();
+                return JsonConvert.DeserializeObject<List<Creature>>(content);
             }
 
             return null;
