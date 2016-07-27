@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bossr.Droid", "Bossr\Bossr.Droid\Bossr.Droid.csproj", "{98ED3A52-C14D-4121-9047-9AD5022B0B65}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bossr.Droid", "Bossr.Droid\Bossr.Droid.csproj", "{98ED3A52-C14D-4121-9047-9AD5022B0B65}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bossr.iOS", "Bossr\Bossr.iOS\Bossr.iOS.csproj", "{A5C25D80-068D-476D-A10A-1C5CAF16D7E5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bossr.iOS", "Bossr.iOS\Bossr.iOS.csproj", "{A5C25D80-068D-476D-A10A-1C5CAF16D7E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bossr", "Bossr\Bossr\Bossr.csproj", "{9F656CA9-2959-43BB-90C7-6FCFAA613450}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bossr", "Bossr\Bossr.csproj", "{9F656CA9-2959-43BB-90C7-6FCFAA613450}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
