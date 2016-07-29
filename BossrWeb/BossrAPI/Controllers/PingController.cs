@@ -8,9 +8,15 @@ namespace BossrAPI.Controllers
 {
     public class PingController : ApiController
     {
-        public string GetPing()
+        [AllowAnonymous]
+        public Ping GetPing()
         {
-            return DateTime.UtcNow.ToString();
+            return new Ping { CurrentTime = $"{DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss")} UTC" };
         }
+    }
+
+    public class Ping
+    {
+        public string CurrentTime { get; set; }
     }
 }

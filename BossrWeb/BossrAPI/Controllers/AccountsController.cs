@@ -11,14 +11,14 @@ namespace BossrAPI.Controllers
     [Authorize(Roles = "Administrator")]
     public class AccountsController : ApiController
     {
+        private readonly ApplicationUserManager manager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
+
         // POST: api/Accounts
         public async Task<IHttpActionResult> PostAccount(ApplicationUser user)
         {
-            ApplicationUserManager usermanager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
-
-            IdentityResult result = await usermanager.CreateAsync(user, "Password1!");
+            IdentityResult result = await manager.CreateAsync(user, "Password1!");
             if (result.Succeeded)
-                return Ok($"Created user: {user.UserName} with password: Password1!");
+                return Ok($"{RequestContext.Principal.Identity.Name} created user: {user.UserName} with password: Password1!");
 
             return BadRequest(result.Errors.First());
         }

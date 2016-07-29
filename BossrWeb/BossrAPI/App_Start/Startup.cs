@@ -1,15 +1,10 @@
 ﻿using System;
 using BossrAPI;
-using BossrAPI.Filters;
 using BossrAPI.Jobs;
 using BossrAPI.Models;
 using BossrAPI.Providers;
 using Hangfire;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
-using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
 
@@ -43,7 +38,6 @@ namespace BossrAPI
             {
                 TokenEndpointPath = new PathString("/Token"),
                 Provider = new ApplicationOAuthProvider("self"),
-                AuthorizeEndpointPath = new PathString("/api/Account/ExternalLogin"),
                 AccessTokenExpireTimeSpan = TimeSpan.FromDays(14)
             });
         }

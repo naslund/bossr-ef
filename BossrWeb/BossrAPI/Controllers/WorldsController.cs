@@ -10,7 +10,6 @@ using BossrLib;
 
 namespace BossrAPI.Controllers
 {
-    [Authorize]
     public class WorldsController : ApiController
     {
         private readonly BossrDbContext db = new BossrDbContext();

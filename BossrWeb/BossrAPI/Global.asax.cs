@@ -10,6 +10,7 @@ namespace BossrAPI
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
             GlobalConfiguration.Configuration.Filters.Add(new RequireHttpsAttribute());
+            GlobalConfiguration.Configuration.Filters.Add(new AuthorizeAttribute());
         }
     }
 }
