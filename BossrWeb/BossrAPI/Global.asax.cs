@@ -1,4 +1,6 @@
 ﻿using System;
+using BossrAPI.Filters;
+using System.Web.Http;
 
 namespace BossrAPI
 {
@@ -6,7 +8,8 @@ namespace BossrAPI
     {
         protected void Application_Start(object sender, EventArgs e)
         {
-            System.Web.Http.GlobalConfiguration.Configure(WebApiConfig.Register);
+            GlobalConfiguration.Configure(WebApiConfig.Register);
+            GlobalConfiguration.Configuration.Filters.Add(new RequireHttpsAttribute());
         }
     }
 }

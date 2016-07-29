@@ -5,20 +5,17 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
-using BossrAPI.Filters;
-using BossrData;
+using BossrAPI.Models;
 using BossrLib;
 
 namespace BossrAPI.Controllers
 {
     [Authorize]
-    [IdentityBasicAuthentication]
     public class SpawnsController : ApiController
     {
-        private readonly BossrContext db = new BossrContext();
+        private readonly BossrDbContext db = new BossrDbContext();
 
         // GET: api/Spawns
-        [AllowAnonymous]
         public IQueryable<Spawn> GetSpawn()
         {
             return db.Spawn.Include(x => x.World).Include(x => x.Creature);
