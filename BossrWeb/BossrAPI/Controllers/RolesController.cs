@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using BossrAPI.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -15,12 +16,12 @@ namespace BossrAPI.Controllers
     {
         private readonly ApplicationRoleManager manager = HttpContext.Current.GetOwinContext().Get<ApplicationRoleManager>();
 
-        public IEnumerable<IdentityRole> GetRoles()
+        public List<RoleInfo> GetRoles()
         {
-            return manager.Roles.ToList();
+            return manager.Roles.Select(x => new RoleInfo { Id = x.Id, Name = x.Name }).ToList();
         }
 
-        public async Task<IHttpActionResult> PostRole(IdentityRole role)
+        public async Task<IHttpActionResult> PostRole(Role role)
         {
             IdentityResult result = await manager.CreateAsync(role);
             if (result.Succeeded)

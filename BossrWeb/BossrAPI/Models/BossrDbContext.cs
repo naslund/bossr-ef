@@ -4,7 +4,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace BossrAPI.Models
 {
-    public class BossrDbContext : IdentityDbContext<ApplicationUser>
+    public class BossrDbContext : IdentityDbContext<User, Role, int, BossrUserLogin, BossrUserRole, BossrUserClaim>
     {
         public BossrDbContext() : base("name=BossrDbContext")
         {
