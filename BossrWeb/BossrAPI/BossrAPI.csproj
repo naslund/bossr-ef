@@ -159,6 +159,10 @@
     <Compile Include="Migrations\201607301646266_IdentityPKInt.Designer.cs">
       <DependentUpon>201607301646266_IdentityPKInt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201607302110239_DateTimeKind.cs" />
+    <Compile Include="Migrations\201607302110239_DateTimeKind.Designer.cs">
+      <DependentUpon>201607302110239_DateTimeKind.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BossrDbContext.cs" />
     <Compile Include="Controllers\CreaturesController.cs" />
@@ -201,6 +205,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201607301646266_IdentityPKInt.resx">
       <DependentUpon>201607301646266_IdentityPKInt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607302110239_DateTimeKind.resx">
+      <DependentUpon>201607302110239_DateTimeKind.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

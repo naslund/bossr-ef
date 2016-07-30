@@ -5,7 +5,10 @@ namespace BossrLib
     public class Spawn
     {
         public int Id { get; set; }
-        public DateTime Time { get; set; }
+
+        [DateTimeKind(DateTimeKind.Utc)]
+        public DateTime DateTimeUtc { get; set; }
+
         public bool IsExact { get; set; }
 
         public World World { get; set; }

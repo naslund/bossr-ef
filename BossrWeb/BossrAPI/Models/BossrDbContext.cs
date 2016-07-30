@@ -1,4 +1,5 @@
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using BossrLib;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -8,6 +9,8 @@ namespace BossrAPI.Models
     {
         public BossrDbContext() : base("name=BossrDbContext")
         {
+            ((IObjectContextAdapter)this).ObjectContext.ObjectMaterialized +=
+            (sender, e) => DateTimeKindAttribute.Apply(e.Entity);
         }
 
         public static BossrDbContext Create()

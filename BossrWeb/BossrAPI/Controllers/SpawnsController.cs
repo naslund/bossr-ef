@@ -15,7 +15,7 @@ namespace BossrAPI.Controllers
         private readonly BossrDbContext db = new BossrDbContext();
 
         // GET: api/Spawns
-        public IQueryable<Spawn> GetSpawn()
+        public IQueryable<Spawn> GetSpawns()
         {
             return db.Spawn.Include(x => x.World).Include(x => x.Creature);
         }
@@ -31,6 +31,22 @@ namespace BossrAPI.Controllers
             }
 
             return Ok(spawn);
+        }
+
+        // GET: api/worlds/5/spawns
+        [HttpGet]
+        [Route("api/worlds/{worldid}/spawns")]
+        public IQueryable<Spawn> GetWorldSpawns(int worldid)
+        {
+            return GetSpawns().Where(x => x.WorldId == worldid);
+        }
+
+        // GET: api/creatures/5/spawns
+        [HttpGet]
+        [Route("api/creatures/{creatureid}/spawns")]
+        public IQueryable<Spawn> GetCreatureSpawns(int creatureid)
+        {
+            return GetSpawns().Where(x => x.CreatureId == creatureid);
         }
 
         // PUT: api/Spawns/5
