@@ -9,6 +9,5 @@ namespace BossrAPI.Models
     {
         public int Id { get; set; }
         public string Username { get; set; }
-        public List<RoleInfo> Roles { get; set; }
     }
 }

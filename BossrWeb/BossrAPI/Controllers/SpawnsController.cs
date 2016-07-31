@@ -15,38 +15,44 @@ namespace BossrAPI.Controllers
         private readonly BossrDbContext db = new BossrDbContext();
 
         // GET: api/Spawns
-        public IQueryable<Spawn> GetSpawns()
+        public async Task<IHttpActionResult> GetSpawns()
         {
-            return db.Spawn.Include(x => x.World).Include(x => x.Creature);
+            return Ok(await db.Spawns/*.Include(x => x.World).Include(x => x.Creature.Category)*/.ToListAsync());
+        }
+
+        // GET: api/worlds/5/spawns
+        [HttpGet]
+        [Route("api/worlds/{worldid}/spawns")]
+        public async Task<IHttpActionResult> GetSpawnsByWorld(int worldid)
+        {
+            if (db.Worlds.Any(x => x.Id == worldid) == false)
+                return NotFound();
+
+            return Ok(await db.Spawns.Where(x => x.WorldId == worldid).ToListAsync());
+        }
+
+        // GET: api/creatures/5/spawns
+        [HttpGet]
+        [Route("api/creatures/{creatureid}/spawns")]
+        public async Task<IHttpActionResult> GetSpawnsByCreature(int creatureid)
+        {
+            if (db.Creatures.Any(x => x.Id == creatureid) == false)
+                return NotFound();
+
+            return Ok(await db.Spawns.Where(x => x.CreatureId == creatureid).ToListAsync());
         }
 
         // GET: api/Spawns/5
         [ResponseType(typeof(Spawn))]
         public async Task<IHttpActionResult> GetSpawn(int id)
         {
-            var spawn = await db.Spawn.FindAsync(id);
+            var spawn = await db.Spawns.FindAsync(id);
             if (spawn == null)
             {
                 return NotFound();
             }
 
             return Ok(spawn);
-        }
-
-        // GET: api/worlds/5/spawns
-        [HttpGet]
-        [Route("api/worlds/{worldid}/spawns")]
-        public IQueryable<Spawn> GetWorldSpawns(int worldid)
-        {
-            return GetSpawns().Where(x => x.WorldId == worldid);
-        }
-
-        // GET: api/creatures/5/spawns
-        [HttpGet]
-        [Route("api/creatures/{creatureid}/spawns")]
-        public IQueryable<Spawn> GetCreatureSpawns(int creatureid)
-        {
-            return GetSpawns().Where(x => x.CreatureId == creatureid);
         }
 
         // PUT: api/Spawns/5
@@ -90,7 +96,7 @@ namespace BossrAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Spawn.Add(spawn);
+            db.Spawns.Add(spawn);
             await db.SaveChangesAsync();
 
             return CreatedAtRoute("DefaultApi", new {id = spawn.Id}, spawn);
@@ -100,13 +106,13 @@ namespace BossrAPI.Controllers
         [ResponseType(typeof(Spawn))]
         public async Task<IHttpActionResult> DeleteSpawn(int id)
         {
-            var spawn = await db.Spawn.FindAsync(id);
+            var spawn = await db.Spawns.FindAsync(id);
             if (spawn == null)
             {
                 return NotFound();
             }
 
-            db.Spawn.Remove(spawn);
+            db.Spawns.Remove(spawn);
             await db.SaveChangesAsync();
 
             return Ok(spawn);
@@ -123,7 +129,7 @@ namespace BossrAPI.Controllers
 
         private bool SpawnExists(int id)
         {
-            return db.Spawn.Count(e => e.Id == id) > 0;
+            return db.Spawns.Count(e => e.Id == id) > 0;
         }
     }
 }

@@ -20,6 +20,7 @@ namespace BossrAPI.Models
 
         public virtual DbSet<World> Worlds { get; set; }
         public virtual DbSet<Creature> Creatures { get; set; }
-        public virtual DbSet<Spawn> Spawn { get; set; }
+        public virtual DbSet<Spawn> Spawns { get; set; }
+        public virtual DbSet<Category> Categories { get; set; }
     }
 }

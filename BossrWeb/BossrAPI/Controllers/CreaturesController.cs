@@ -15,9 +15,20 @@ namespace BossrAPI.Controllers
         private readonly BossrDbContext db = new BossrDbContext();
 
         // GET: api/Creatures
-        public IQueryable<Creature> GetCreatures()
+        public async Task<IHttpActionResult> GetCreatures()
         {
-            return db.Creatures;
+            return Ok(await db.Creatures.ToListAsync());
+        }
+
+        // GET: api/categories/5/creatures
+        [HttpGet]
+        [Route("api/categories/{categoryid}/creatures")]
+        public async Task<IHttpActionResult> GetCategoryCreatures(int categoryid)
+        {
+            if (await db.Categories.AnyAsync(x => x.Id == categoryid) == false)
+                return NotFound();
+
+            return Ok(await db.Creatures.Where(x => x.CategoryId == categoryid).ToListAsync());
         }
 
         // GET: api/Creatures/5

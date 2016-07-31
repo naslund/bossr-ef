@@ -15,9 +15,9 @@ namespace BossrAPI.Controllers
         private readonly BossrDbContext db = new BossrDbContext();
 
         // GET: api/Worlds
-        public IQueryable<World> GetWorlds()
+        public async Task<IHttpActionResult> GetWorlds()
         {
-            return db.Worlds;
+            return Ok(await db.Worlds.ToListAsync());
         }
 
         // GET: api/Worlds/5

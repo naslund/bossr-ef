@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -14,30 +15,21 @@ namespace BossrAPI.Controllers
     {
         private readonly BossrDbContext db = new BossrDbContext();
         private readonly ApplicationUserManager manager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
-        private readonly ApplicationRoleManager rolemanager = HttpContext.Current.GetOwinContext().Get<ApplicationRoleManager>();
 
         // GET: api/users
-        [AllowAnonymous]
-        public List<UserInfo> GetUsers()
+        public async Task<IHttpActionResult> GetUsers()
         {
-            List<UserInfo> userInfo = new List<UserInfo>();
+            return Ok(await manager.Users.Select(x => new UserInfo { Id = x.Id, Username = x.UserName }).ToListAsync());
+        }
 
-            foreach (User user in manager.Users.ToList())
-            {
-                List<RoleInfo> roleInfo = user.Roles
-                    .Select(bossrUserRole => rolemanager.FindById(bossrUserRole.RoleId))
-                    .Select(role => new RoleInfo {Id = role.Id, Name = role.Name})
-                    .ToList();
+        // GET: api/users/5
+        public async Task<IHttpActionResult> GetUser(int id)
+        {
+            User user = await manager.FindByIdAsync(id);
+            if (user == null)
+                return NotFound();
 
-                userInfo.Add(new UserInfo
-                {
-                    Id = user.Id,
-                    Username = user.UserName,
-                    Roles = roleInfo
-                });
-            }
-
-            return userInfo;
+            return Ok(new UserInfo { Id = user.Id, Username = user.UserName });
         }
 
         // POST: api/users
@@ -65,7 +57,7 @@ namespace BossrAPI.Controllers
             return BadRequest(result.Errors.First());
         }
 
-        // DELETE: api/users/5/roles/5
+        // PUT: api/users/5/roles/5
         [HttpDelete]
         [Route("api/users/{userid}/roles/{roleid}")]
         public async Task<IHttpActionResult> DismissUserFromRole(int userid, int roleid)

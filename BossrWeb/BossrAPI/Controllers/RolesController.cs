@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -16,11 +17,13 @@ namespace BossrAPI.Controllers
     {
         private readonly ApplicationRoleManager manager = HttpContext.Current.GetOwinContext().Get<ApplicationRoleManager>();
 
-        public List<RoleInfo> GetRoles()
+        // GET: api/roles
+        public async Task<IHttpActionResult> GetRoles()
         {
-            return manager.Roles.Select(x => new RoleInfo { Id = x.Id, Name = x.Name }).ToList();
+            return Ok(await manager.Roles.Select(x => new RoleInfo { Id = x.Id, Name = x.Name }).ToListAsync());
         }
 
+        // POST: api/roles
         public async Task<IHttpActionResult> PostRole(Role role)
         {
             IdentityResult result = await manager.CreateAsync(role);

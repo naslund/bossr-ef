@@ -148,6 +148,7 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Filters\RequireHttpsAttribute.cs" />
@@ -162,6 +163,14 @@
     <Compile Include="Migrations\201607302110239_DateTimeKind.cs" />
     <Compile Include="Migrations\201607302110239_DateTimeKind.Designer.cs">
       <DependentUpon>201607302110239_DateTimeKind.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607302349191_Category.cs" />
+    <Compile Include="Migrations\201607302349191_Category.Designer.cs">
+      <DependentUpon>201607302349191_Category.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607302354040_CategoryId.cs" />
+    <Compile Include="Migrations\201607302354040_CategoryId.Designer.cs">
+      <DependentUpon>201607302354040_CategoryId.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BossrDbContext.cs" />
@@ -208,6 +217,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201607302110239_DateTimeKind.resx">
       <DependentUpon>201607302110239_DateTimeKind.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607302349191_Category.resx">
+      <DependentUpon>201607302349191_Category.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607302354040_CategoryId.resx">
+      <DependentUpon>201607302354040_CategoryId.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
