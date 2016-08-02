@@ -20,19 +20,7 @@ namespace BossrAPI.Controllers
             return Ok(await db.Creatures.ToListAsync());
         }
 
-        // GET: api/categories/5/creatures
-        [HttpGet]
-        [Route("api/categories/{categoryid}/creatures")]
-        public async Task<IHttpActionResult> GetCategoryCreatures(int categoryid)
-        {
-            if (await db.Categories.AnyAsync(x => x.Id == categoryid) == false)
-                return NotFound();
-
-            return Ok(await db.Creatures.Where(x => x.CategoryId == categoryid).ToListAsync());
-        }
-
         // GET: api/Creatures/5
-        [ResponseType(typeof(Creature))]
         public async Task<IHttpActionResult> GetCreature(int id)
         {
             var creature = await db.Creatures.FindAsync(id);
@@ -45,7 +33,6 @@ namespace BossrAPI.Controllers
         }
 
         // PUT: api/Creatures/5
-        [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> PutCreature(int id, Creature creature)
         {
             if (!ModelState.IsValid)
@@ -77,7 +64,6 @@ namespace BossrAPI.Controllers
         }
 
         // POST: api/Creatures
-        [ResponseType(typeof(Creature))]
         public async Task<IHttpActionResult> PostCreature(Creature creature)
         {
             if (!ModelState.IsValid)
@@ -92,7 +78,6 @@ namespace BossrAPI.Controllers
         }
 
         // DELETE: api/Creatures/5
-        [ResponseType(typeof(Creature))]
         public async Task<IHttpActionResult> DeleteCreature(int id)
         {
             var creature = await db.Creatures.FindAsync(id);
@@ -105,6 +90,29 @@ namespace BossrAPI.Controllers
             await db.SaveChangesAsync();
 
             return Ok(creature);
+        }
+
+        // GET: api/creatures/5/spawns
+        [HttpGet]
+        [Route("api/creatures/{creatureid}/spawns")]
+        public async Task<IHttpActionResult> GetCreatureSpawns(int creatureid)
+        {
+            if (CreatureExists(creatureid) == false)
+                return NotFound();
+
+            return Ok(await db.Spawns.Where(x => x.CreatureId == creatureid).ToListAsync());
+        }
+
+        // GET: api/creatures/5/categories
+        [HttpGet]
+        [Route("api/creatures/{creatureid}/categories")]
+        public async Task<IHttpActionResult> GetCreatureCategory(int creatureid)
+        {
+            var creature = await db.Creatures.Include(x => x.Category).SingleOrDefaultAsync(x => x.Id == creatureid);
+            if (creature == null)
+                return NotFound();
+            
+            return Ok(creature.Category);
         }
 
         protected override void Dispose(bool disposing)

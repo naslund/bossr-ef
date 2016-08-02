@@ -21,7 +21,6 @@ namespace BossrAPI.Controllers
         }
 
         // GET: api/Worlds/5
-        [ResponseType(typeof(World))]
         public async Task<IHttpActionResult> GetWorld(int id)
         {
             var world = await db.Worlds.FindAsync(id);
@@ -34,7 +33,6 @@ namespace BossrAPI.Controllers
         }
 
         // PUT: api/Worlds/5
-        [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> PutWorld(int id, World world)
         {
             if (!ModelState.IsValid)
@@ -66,7 +64,6 @@ namespace BossrAPI.Controllers
         }
 
         // POST: api/Worlds
-        [ResponseType(typeof(World))]
         public async Task<IHttpActionResult> PostWorld(World world)
         {
             if (!ModelState.IsValid)
@@ -81,7 +78,6 @@ namespace BossrAPI.Controllers
         }
 
         // DELETE: api/Worlds/5
-        [ResponseType(typeof(World))]
         public async Task<IHttpActionResult> DeleteWorld(int id)
         {
             var world = await db.Worlds.FindAsync(id);
@@ -94,6 +90,17 @@ namespace BossrAPI.Controllers
             await db.SaveChangesAsync();
 
             return Ok(world);
+        }
+
+        // GET: api/worlds/5/spawns
+        [HttpGet]
+        [Route("api/worlds/{worldid}/spawns")]
+        public async Task<IHttpActionResult> GetWorldSpawns(int worldid)
+        {
+            if (WorldExists(worldid) == false)
+                return NotFound();
+
+            return Ok(await db.Spawns.Where(x => x.WorldId == worldid).ToListAsync());
         }
 
         protected override void Dispose(bool disposing)

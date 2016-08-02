@@ -20,7 +20,37 @@ namespace BossrAPI.Controllers
         // GET: api/roles
         public async Task<IHttpActionResult> GetRoles()
         {
-            return Ok(await manager.Roles.Select(x => new RoleInfo { Id = x.Id, Name = x.Name }).ToListAsync());
+            return Ok(await manager.Roles.ToListAsync());
+        }
+
+        // GET: api/roles/5
+        public async Task<IHttpActionResult> GetRole(int id)
+        {
+            Role role = await manager.FindByIdAsync(id);
+            if (role == null)
+                return NotFound();
+
+            return Ok(role);
+        }
+
+        // PUT: api/roles/5
+        public async Task<IHttpActionResult> PutRole(int id, Role role)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            if (id != role.Id)
+                return BadRequest();
+
+            Role userRole = await manager.FindByIdAsync(id);
+            userRole.Name = role.Name;
+
+            IdentityResult result = await manager.UpdateAsync(userRole);
+
+            if (result.Succeeded)
+                return Ok(userRole);
+
+            return BadRequest(result.Errors.First());
         }
 
         // POST: api/roles
@@ -28,7 +58,7 @@ namespace BossrAPI.Controllers
         {
             IdentityResult result = await manager.CreateAsync(role);
             if (result.Succeeded)
-                return Ok($"{RequestContext.Principal.Identity.Name} created role: {role.Name}");
+                return Ok(role);
 
             return BadRequest(result.Errors.First());
         }

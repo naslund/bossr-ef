@@ -25,7 +25,6 @@ namespace BossrAPI.Controllers
         }
 
         // GET: api/Categories/5
-        [ResponseType(typeof(Category))]
         public async Task<IHttpActionResult> GetCategory(int id)
         {
             Category category = await db.Categories.FindAsync(id);
@@ -38,7 +37,6 @@ namespace BossrAPI.Controllers
         }
 
         // PUT: api/Categories/5
-        [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> PutCategory(int id, Category category)
         {
             if (!ModelState.IsValid)
@@ -73,7 +71,6 @@ namespace BossrAPI.Controllers
         }
 
         // POST: api/Categories
-        [ResponseType(typeof(Category))]
         public async Task<IHttpActionResult> PostCategory(Category category)
         {
             if (!ModelState.IsValid)
@@ -88,7 +85,6 @@ namespace BossrAPI.Controllers
         }
 
         // DELETE: api/Categories/5
-        [ResponseType(typeof(Category))]
         public async Task<IHttpActionResult> DeleteCategory(int id)
         {
             Category category = await db.Categories.FindAsync(id);
@@ -101,6 +97,17 @@ namespace BossrAPI.Controllers
             await db.SaveChangesAsync();
 
             return Ok(category);
+        }
+
+        // GET: api/categories/5/creatures
+        [HttpGet]
+        [Route("api/categories/{categoryid}/creatures")]
+        public async Task<IHttpActionResult> GetCategoryCreatures(int categoryid)
+        {
+            if (await db.Categories.AnyAsync(x => x.Id == categoryid) == false)
+                return NotFound();
+
+            return Ok(await db.Creatures.Where(x => x.CategoryId == categoryid).ToListAsync());
         }
 
         protected override void Dispose(bool disposing)

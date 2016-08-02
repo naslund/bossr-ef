@@ -17,33 +17,10 @@ namespace BossrAPI.Controllers
         // GET: api/Spawns
         public async Task<IHttpActionResult> GetSpawns()
         {
-            return Ok(await db.Spawns/*.Include(x => x.World).Include(x => x.Creature.Category)*/.ToListAsync());
-        }
-
-        // GET: api/worlds/5/spawns
-        [HttpGet]
-        [Route("api/worlds/{worldid}/spawns")]
-        public async Task<IHttpActionResult> GetSpawnsByWorld(int worldid)
-        {
-            if (db.Worlds.Any(x => x.Id == worldid) == false)
-                return NotFound();
-
-            return Ok(await db.Spawns.Where(x => x.WorldId == worldid).ToListAsync());
-        }
-
-        // GET: api/creatures/5/spawns
-        [HttpGet]
-        [Route("api/creatures/{creatureid}/spawns")]
-        public async Task<IHttpActionResult> GetSpawnsByCreature(int creatureid)
-        {
-            if (db.Creatures.Any(x => x.Id == creatureid) == false)
-                return NotFound();
-
-            return Ok(await db.Spawns.Where(x => x.CreatureId == creatureid).ToListAsync());
+            return Ok(await db.Spawns.ToListAsync());
         }
 
         // GET: api/Spawns/5
-        [ResponseType(typeof(Spawn))]
         public async Task<IHttpActionResult> GetSpawn(int id)
         {
             var spawn = await db.Spawns.FindAsync(id);
@@ -56,7 +33,6 @@ namespace BossrAPI.Controllers
         }
 
         // PUT: api/Spawns/5
-        [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> PutSpawn(int id, Spawn spawn)
         {
             if (!ModelState.IsValid)
@@ -88,7 +64,6 @@ namespace BossrAPI.Controllers
         }
 
         // POST: api/Spawns
-        [ResponseType(typeof(Spawn))]
         public async Task<IHttpActionResult> PostSpawn(Spawn spawn)
         {
             if (!ModelState.IsValid)
@@ -103,7 +78,6 @@ namespace BossrAPI.Controllers
         }
 
         // DELETE: api/Spawns/5
-        [ResponseType(typeof(Spawn))]
         public async Task<IHttpActionResult> DeleteSpawn(int id)
         {
             var spawn = await db.Spawns.FindAsync(id);
