@@ -1,6 +1,8 @@
 ﻿using System;
+using System.ComponentModel;
 using BossrAPI.Filters;
 using System.Web.Http;
+using Newtonsoft.Json;
 
 namespace BossrAPI
 {

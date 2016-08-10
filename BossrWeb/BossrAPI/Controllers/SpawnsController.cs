@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
@@ -36,15 +37,16 @@ namespace BossrAPI.Controllers
         public async Task<IHttpActionResult> PutSpawn(int id, Spawn spawn)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
 
             if (id != spawn.Id)
-            {
                 return BadRequest();
-            }
 
+            if (spawn.DateTimeUtc.Kind == DateTimeKind.Unspecified)
+                return BadRequest();
+
+            spawn.DateTimeUtc = spawn.DateTimeUtc.ToUniversalTime();
+            
             db.Entry(spawn).State = EntityState.Modified;
 
             try
@@ -67,9 +69,12 @@ namespace BossrAPI.Controllers
         public async Task<IHttpActionResult> PostSpawn(Spawn spawn)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
+
+            if (spawn.DateTimeUtc.Kind == DateTimeKind.Unspecified)
+                return BadRequest();
+
+            spawn.DateTimeUtc = spawn.DateTimeUtc.ToUniversalTime();
 
             db.Spawns.Add(spawn);
             await db.SaveChangesAsync();

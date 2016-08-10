@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
@@ -48,7 +49,7 @@ namespace BossrAPI.Controllers
             IdentityResult result = await manager.UpdateAsync(userRole);
 
             if (result.Succeeded)
-                return Ok(userRole);
+                return StatusCode(HttpStatusCode.NoContent);
 
             return BadRequest(result.Errors.First());
         }
@@ -58,7 +59,7 @@ namespace BossrAPI.Controllers
         {
             IdentityResult result = await manager.CreateAsync(role);
             if (result.Succeeded)
-                return Ok(role);
+                return CreatedAtRoute("DefaultApi", new {id = role.Id}, role);
 
             return BadRequest(result.Errors.First());
         }
