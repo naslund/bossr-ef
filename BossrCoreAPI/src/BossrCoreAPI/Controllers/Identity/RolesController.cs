@@ -17,15 +17,13 @@ namespace BossrCoreAPI.Controllers.Identity
         {
             this.rolemanager = rolemanager;
         }
-
-        // GET: api/roles
+        
         [HttpGet]
         public async Task<IActionResult> GetRoles()
         {
             return Ok(await rolemanager.Roles.ToListAsync());
         }
-
-        // GET: api/roles/5
+        
         [HttpGet("{id}")]
         public async Task<IActionResult> GetRole(int id)
         {
@@ -38,8 +36,7 @@ namespace BossrCoreAPI.Controllers.Identity
 
             return Ok(role);
         }
-
-        // PUT: api/roles/5
+        
         [HttpPut("{id}")]
         public async Task<IActionResult> PutRole(int id, string name)
         {
@@ -58,8 +55,7 @@ namespace BossrCoreAPI.Controllers.Identity
 
             return BadRequest(result.Errors);
         }
-
-        // POST: api/roles
+        
         [HttpPost]
         public async Task<IActionResult> PostRole(string name)
         {
@@ -74,8 +70,7 @@ namespace BossrCoreAPI.Controllers.Identity
 
             return BadRequest(result.Errors);
         }
-
-        // DELETE: api/roles/5
+        
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRole(int id)
         {

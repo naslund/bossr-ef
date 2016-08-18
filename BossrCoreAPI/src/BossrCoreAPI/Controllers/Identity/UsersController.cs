@@ -20,15 +20,13 @@ namespace BossrCoreAPI.Controllers.Identity
             this.usermanager = usermanager;
             this.rolemanager = rolemanager;
         }
-
-        // GET: api/users
+        
         [HttpGet]
         public async Task<IActionResult> GetUsers()
         {
             return Ok(await usermanager.Users.ToListAsync());
         }
-
-        // GET: api/users/5
+        
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUser(int id)
         {
@@ -41,8 +39,7 @@ namespace BossrCoreAPI.Controllers.Identity
 
             return Ok(user);
         }
-
-        // POST: api/users
+        
         [HttpPost]
         public async Task<IActionResult> PostUser(string username, string password)
         {
@@ -58,8 +55,7 @@ namespace BossrCoreAPI.Controllers.Identity
 
             return BadRequest(result.Errors);
         }
-
-        // DELETE: api/users/5
+        
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {
@@ -73,8 +69,7 @@ namespace BossrCoreAPI.Controllers.Identity
 
             return BadRequest(result.Errors);
         }
-
-        // PUT: api/users/5/password
+        
         [HttpPut]
         [Route("{id}/password")]
         public async Task<IActionResult> ChangeUserPassword(int id, string oldPassword, string newPassword)
@@ -95,8 +90,7 @@ namespace BossrCoreAPI.Controllers.Identity
 
             return BadRequest(result.Errors);
         }
-
-        // GET: api/users/5/roles
+        
         [HttpGet]
         [Route("{id}/roles")]
         public async Task<IActionResult> GetUserRoles(int id)
@@ -112,8 +106,7 @@ namespace BossrCoreAPI.Controllers.Identity
 
             return Ok(roles);
         }
-
-        // PUT: api/users/5/roles/5
+        
         [HttpPut]
         [Route("{id}/roles/{roleid}")]
         public async Task<IActionResult> AssignUserToRole(int id, int roleid)
@@ -132,8 +125,7 @@ namespace BossrCoreAPI.Controllers.Identity
 
             return BadRequest(result.Errors);
         }
-
-        // DELETE: api/users/5/roles/5
+        
         [HttpDelete]
         [Route("{id}/roles/{roleid}")]
         public async Task<IActionResult> DismissUserFromRole(int id, int roleid)

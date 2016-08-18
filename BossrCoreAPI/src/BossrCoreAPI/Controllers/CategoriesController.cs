@@ -19,8 +19,7 @@ namespace BossrCoreAPI.Controllers
         public CategoriesController(ApplicationDbContext context) : base(context)
         {
         }
-
-        // GET: api/categories/5/creatures
+        
         [HttpGet("{id}/creatures")]
         public async Task<IActionResult> GetCategoryCreatures(int id)
         {
