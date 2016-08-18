@@ -19,7 +19,46 @@ namespace BossrCoreAPI.Controllers
         {
         }
 
-        // GET: api/creatures/5/spawns
+        [HttpGet("{id}/categories")]
+        public async Task<IActionResult> GetCreatureCategory(int id)
+        {
+            Creature creature = await context.Creatures.Include(x => x.Category).SingleOrDefaultAsync(x => x.Id == id);
+            if (creature?.Category == null)
+                return NotFound();
+
+            creature.Category.Creatures = null;
+            return Ok(creature.Category);
+        }
+
+        [HttpPut("{id}/categories/{categoryid}")]
+        public async Task<IActionResult> PutCreatureCategory(int id, int categoryid)
+        {
+            Creature creature = await context.Creatures.SingleOrDefaultAsync(x => x.Id == id);
+            if (creature == null)
+                return NotFound();
+
+            if (await context.Categories.AnyAsync(x => x.Id == categoryid) == false)
+                return NotFound();
+
+            creature.CategoryId = categoryid;
+            await context.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        [HttpDelete("{id}/categories")]
+        public async Task<IActionResult> DeleteCreatureCategory(int id)
+        {
+            Creature creature = await context.Creatures.SingleOrDefaultAsync(x => x.Id == id);
+            if (creature == null)
+                return NotFound();
+
+            creature.CategoryId = null;
+            await context.SaveChangesAsync();
+
+            return Ok();
+        }
+
         [HttpGet("{id}/spawns")]
         public async Task<IActionResult> GetCreatureSpawns(int id)
         {
