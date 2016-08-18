@@ -13,5 +13,6 @@ namespace BossrCoreAPI.Models.Identity
         public DbSet<World> Worlds { get; set; }
         public DbSet<Spawn> Spawns { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Location> Locations { get; set; }
     }
 }

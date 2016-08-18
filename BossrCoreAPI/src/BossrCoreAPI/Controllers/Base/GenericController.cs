@@ -38,7 +38,7 @@ namespace BossrCoreAPI.Controllers.Base
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            if (await context.Categories.AnyAsync(x => x.Id == entity.Id) == false)
+            if (await context.Set<T>().AnyAsync(x => x.Id == entity.Id) == false)
                 return NotFound();
 
             context.Entry(entity).State = EntityState.Modified;

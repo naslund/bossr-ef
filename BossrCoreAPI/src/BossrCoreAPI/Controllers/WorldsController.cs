@@ -18,16 +18,22 @@ namespace BossrCoreAPI.Controllers
         public WorldsController(ApplicationDbContext context) : base(context)
         {
         }
-
-        // GET: api/Worlds/5/spawns
-        [HttpGet]
-        [Route("{id}/spawns")]
+        
+        [HttpGet("{id}/spawns")]
         public async Task<IActionResult> GetWorldSpawns(int id)
         {
             if (context.Worlds.Any(x => x.Id == id) == false)
                 return NotFound();
 
             return Ok(await context.Spawns.Where(x => x.WorldId == id).ToListAsync());
+        }
+
+        [HttpGet("{id}/spawns/recent")]
+        public async Task<IActionResult> GetRecentSpawns(int id)
+        {
+            DateTimeOffset threeDaysAgo = new DateTimeOffset(DateTime.UtcNow).AddDays(-3);
+
+            return Ok(await context.Spawns.Where(x => x.WorldId == id).Where(x => x.TimeMaxUtc > threeDaysAgo).ToListAsync());
         }
     }
 }

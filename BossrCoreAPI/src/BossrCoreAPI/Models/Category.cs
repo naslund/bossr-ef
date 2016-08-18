@@ -1,4 +1,5 @@
-﻿using BossrCoreAPI.Models.Interfaces;
+﻿using System.Collections.Generic;
+using BossrCoreAPI.Models.Interfaces;
 
 namespace BossrCoreAPI.Models
 {
@@ -6,5 +7,7 @@ namespace BossrCoreAPI.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+
+        public List<Creature> Creatures { get; set; }
     }
 }

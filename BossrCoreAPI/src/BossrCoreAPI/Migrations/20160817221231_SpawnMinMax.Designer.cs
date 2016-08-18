@@ -8,9 +8,10 @@ using BossrCoreAPI.Models.Identity;
 namespace BossrCoreAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20160817221231_SpawnMinMax")]
+    partial class SpawnMinMax
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.0-rtm-21431")
@@ -33,11 +34,7 @@ namespace BossrCoreAPI.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("CategoryId");
-
-                    b.Property<int>("HoursBetweenEachSpawnMax");
-
-                    b.Property<int>("HoursBetweenEachSpawnMin");
+                    b.Property<int>("CategoryId");
 
                     b.Property<string>("Name");
 
@@ -120,36 +117,12 @@ namespace BossrCoreAPI.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("BossrCoreAPI.Models.Location", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("CreatureId");
-
-                    b.Property<string>("Name");
-
-                    b.Property<int>("PosX");
-
-                    b.Property<int>("PosY");
-
-                    b.Property<byte>("PosZ");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatureId");
-
-                    b.ToTable("Locations");
-                });
-
             modelBuilder.Entity("BossrCoreAPI.Models.Spawn", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("CreatureId");
-
-                    b.Property<int?>("LocationId");
 
                     b.Property<DateTimeOffset>("TimeMaxUtc");
 
@@ -160,8 +133,6 @@ namespace BossrCoreAPI.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CreatureId");
-
-                    b.HasIndex("LocationId");
 
                     b.HasIndex("WorldId");
 
@@ -343,31 +314,20 @@ namespace BossrCoreAPI.Migrations
             modelBuilder.Entity("BossrCoreAPI.Models.Creature", b =>
                 {
                     b.HasOne("BossrCoreAPI.Models.Category", "Category")
-                        .WithMany("Creatures")
-                        .HasForeignKey("CategoryId");
-                });
-
-            modelBuilder.Entity("BossrCoreAPI.Models.Location", b =>
-                {
-                    b.HasOne("BossrCoreAPI.Models.Creature", "Creature")
-                        .WithMany("Locations")
-                        .HasForeignKey("CreatureId")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("BossrCoreAPI.Models.Spawn", b =>
                 {
                     b.HasOne("BossrCoreAPI.Models.Creature", "Creature")
-                        .WithMany("Spawns")
+                        .WithMany()
                         .HasForeignKey("CreatureId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("BossrCoreAPI.Models.Location", "Location")
-                        .WithMany("Spawns")
-                        .HasForeignKey("LocationId");
-
                     b.HasOne("BossrCoreAPI.Models.World", "World")
-                        .WithMany("Spawns")
+                        .WithMany()
                         .HasForeignKey("WorldId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

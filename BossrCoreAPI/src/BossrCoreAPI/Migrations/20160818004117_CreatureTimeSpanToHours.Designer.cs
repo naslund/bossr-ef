@@ -8,9 +8,10 @@ using BossrCoreAPI.Models.Identity;
 namespace BossrCoreAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20160818004117_CreatureTimeSpanToHours")]
+    partial class CreatureTimeSpanToHours
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.0-rtm-21431")
@@ -33,7 +34,7 @@ namespace BossrCoreAPI.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("CategoryId");
+                    b.Property<int>("CategoryId");
 
                     b.Property<int>("HoursBetweenEachSpawnMax");
 
@@ -344,7 +345,8 @@ namespace BossrCoreAPI.Migrations
                 {
                     b.HasOne("BossrCoreAPI.Models.Category", "Category")
                         .WithMany("Creatures")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("BossrCoreAPI.Models.Location", b =>

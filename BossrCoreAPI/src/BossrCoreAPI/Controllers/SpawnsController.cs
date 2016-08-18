@@ -21,13 +21,24 @@ namespace BossrCoreAPI.Controllers
 
         public override async Task<IActionResult> PostEntity(Spawn entity)
         {
-            if (entity.DateTimeUtc.Ticks == 0)
+            if (entity.TimeMinUtc.Ticks == 0 || entity.TimeMaxUtc.Ticks == 0)
                 return BadRequest();
 
-            if (entity.DateTimeUtc.Offset != TimeSpan.Zero)
-                return BadRequest(new { message = "DateTimeUTC must be UTC (+00:00)" });
+            if (entity.TimeMinUtc.Offset != TimeSpan.Zero || entity.TimeMaxUtc.Offset != TimeSpan.Zero)
+                return BadRequest(new { message = "TimeMinUtc and TimeMaxUtc must be UTC (+00:00)" });
+
+            if (entity.TimeMinUtc > entity.TimeMaxUtc)
+                return BadRequest(new { message = "TimeMinUtc can only occur before TimeMaxUtc" });
 
             return await base.PostEntity(entity);
+        }
+
+        [HttpGet("recent")]
+        public async Task<IActionResult> GetRecentSpawns()
+        {
+            DateTimeOffset threeDaysAgo = new DateTimeOffset(DateTime.UtcNow).AddDays(-3);
+
+            return Ok(await context.Spawns.Where(x => x.TimeMaxUtc > threeDaysAgo).ToListAsync());
         }
     }
 }

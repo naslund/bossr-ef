@@ -20,14 +20,22 @@ namespace BossrCoreAPI.Controllers
         }
 
         // GET: api/creatures/5/spawns
-        [HttpGet]
-        [Route("{id}/spawns")]
+        [HttpGet("{id}/spawns")]
         public async Task<IActionResult> GetCreatureSpawns(int id)
         {
-            if (await context.Creatures.AnyAsync(x => x.Id == id))
+            if (await context.Creatures.AnyAsync(x => x.Id == id) == false)
                 return NotFound();
 
             return Ok(await context.Spawns.Where(x => x.CreatureId == id).ToListAsync());
+        }
+
+        [HttpGet("{id}/locations")]
+        public async Task<IActionResult> GetCreatureLocations(int id)
+        {
+            if (await context.Creatures.AnyAsync(x => x.Id == id) == false)
+                return NotFound();
+
+            return Ok(await context.Locations.Where(x => x.CreatureId == id).ToListAsync());
         }
     }
 }
