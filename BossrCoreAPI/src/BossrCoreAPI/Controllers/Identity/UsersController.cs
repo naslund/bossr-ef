@@ -70,8 +70,7 @@ namespace BossrCoreAPI.Controllers.Identity
             return BadRequest(result.Errors);
         }
         
-        [HttpPut]
-        [Route("{id}/password")]
+        [HttpPut("{id}/password")]
         public async Task<IActionResult> ChangeUserPassword(int id, string oldPassword, string newPassword)
         {
             if (!ModelState.IsValid)
@@ -91,8 +90,7 @@ namespace BossrCoreAPI.Controllers.Identity
             return BadRequest(result.Errors);
         }
         
-        [HttpGet]
-        [Route("{id}/roles")]
+        [HttpGet("{id}/roles")]
         public async Task<IActionResult> GetUserRoles(int id)
         {
             ApplicationUser user = await usermanager.FindByIdAsync(id.ToString());
@@ -107,8 +105,7 @@ namespace BossrCoreAPI.Controllers.Identity
             return Ok(roles);
         }
         
-        [HttpPut]
-        [Route("{id}/roles/{roleid}")]
+        [HttpPut("{id}/roles/{roleid}")]
         public async Task<IActionResult> AssignUserToRole(int id, int roleid)
         {
             ApplicationUser user = await usermanager.FindByIdAsync(id.ToString());
@@ -126,8 +123,7 @@ namespace BossrCoreAPI.Controllers.Identity
             return BadRequest(result.Errors);
         }
         
-        [HttpDelete]
-        [Route("{id}/roles/{roleid}")]
+        [HttpDelete("{id}/roles/{roleid}")]
         public async Task<IActionResult> DismissUserFromRole(int id, int roleid)
         {
             ApplicationUser user = await usermanager.FindByIdAsync(id.ToString());

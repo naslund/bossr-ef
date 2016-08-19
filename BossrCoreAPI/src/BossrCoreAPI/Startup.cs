@@ -29,7 +29,7 @@ namespace BossrCoreAPI
         {
             services.AddEntityFrameworkSqlServer()
                 .AddDbContext<ApplicationDbContext>(options => 
-                    options.UseSqlServer(Configuration["Data:ConnectionStrings:DefaultConnection"]));
+                    options.UseSqlServer(Configuration["Data:ConnectionStrings:AzureConnection"]));
             
             services.AddIdentity<ApplicationUser, ApplicationRole>(x => x.User.RequireUniqueEmail = false)
                 .AddEntityFrameworkStores<ApplicationDbContext, int>()
