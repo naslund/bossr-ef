@@ -1,4 +1,4 @@
-﻿namespace BossrCoreAPI.Models.Interfaces
+﻿namespace BossrLib.Interfaces
 {
     public interface IEntity
     {

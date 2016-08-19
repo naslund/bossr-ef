@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using BossrCoreAPI.Models.Interfaces;
+﻿using System.Collections.Generic;
+using BossrLib.Interfaces;
 
-namespace BossrCoreAPI.Models
+namespace BossrLib.Classes
 {
     public class Creature : IEntity
     {

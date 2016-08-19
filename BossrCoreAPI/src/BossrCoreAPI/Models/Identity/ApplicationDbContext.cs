@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OpenIddict;
+using BossrLib.Classes;
 
 namespace BossrCoreAPI.Models.Identity
 {

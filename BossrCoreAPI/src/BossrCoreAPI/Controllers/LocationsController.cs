@@ -6,6 +6,7 @@ using BossrCoreAPI.Models.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using BossrLib.Classes;
 
 namespace BossrCoreAPI.Controllers
 {
@@ -24,6 +25,16 @@ namespace BossrCoreAPI.Controllers
                 return NotFound();
 
             return Ok(await context.Spawns.Where(x => x.LocationId.Value == id).ToListAsync());
+        }
+
+        [HttpGet("{id}/creatures")]
+        public async Task<IActionResult> GetLocationCreature(int id)
+        {
+            Location location = await context.Locations.SingleOrDefaultAsync(x => x.Id == id);
+            if (location == null)
+                return NotFound();
+
+            return Ok(await context.Creatures.SingleOrDefaultAsync(x => x.Id == location.CreatureId));
         }
     }
 }

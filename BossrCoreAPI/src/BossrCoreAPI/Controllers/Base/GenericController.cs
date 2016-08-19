@@ -1,9 +1,8 @@
 ﻿using System.Threading.Tasks;
-using BossrCoreAPI.Models;
 using BossrCoreAPI.Models.Identity;
-using BossrCoreAPI.Models.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using BossrLib.Interfaces;
 
 namespace BossrCoreAPI.Controllers.Base
 {

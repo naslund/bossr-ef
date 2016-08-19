@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using BossrCoreAPI.Models.Interfaces;
+using BossrLib.Interfaces;
 
-namespace BossrCoreAPI.Models
+namespace BossrLib.Classes
 {
     public class Category : IEntity
     {

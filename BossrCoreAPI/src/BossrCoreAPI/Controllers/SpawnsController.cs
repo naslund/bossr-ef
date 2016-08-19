@@ -2,11 +2,11 @@
 using System.Linq;
 using System.Threading.Tasks;
 using BossrCoreAPI.Controllers.Base;
-using BossrCoreAPI.Models;
 using BossrCoreAPI.Models.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using BossrLib.Classes;
 
 namespace BossrCoreAPI.Controllers
 {
