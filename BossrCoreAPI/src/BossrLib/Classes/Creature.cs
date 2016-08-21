@@ -7,6 +7,7 @@ namespace BossrLib.Classes
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public bool Monitored { get; set; }
 
         public int HoursBetweenEachSpawnMin { get; set; }
         public int HoursBetweenEachSpawnMax { get; set; }
