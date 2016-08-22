@@ -32,7 +32,7 @@ namespace BossrCoreAPI.Controllers.Base
         }
 
         [HttpPut("{id}")]
-        public virtual async Task<IActionResult> PutEntity(T entity)
+        public virtual async Task<IActionResult> PutEntity([FromBody]T entity)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -48,7 +48,7 @@ namespace BossrCoreAPI.Controllers.Base
         }
 
         [HttpPost]
-        public virtual async Task<IActionResult> PostEntity(T entity)
+        public virtual async Task<IActionResult> PostEntity([FromBody]T entity)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);

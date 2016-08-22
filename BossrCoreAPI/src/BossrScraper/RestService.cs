@@ -72,16 +72,7 @@ namespace BossrScraper
                 client.BaseAddress = new Uri(Configuration["Data:API:Uri"]);
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token.Token_Type, Token.Access_Token);
 
-                // ToDo: json
-                //var response = await client.PostAsync("api/spawns", new StringContent(JsonConvert.SerializeObject(spawn), Encoding.UTF8, "application/json"));
-                var response = await client.PostAsync("api/spawns", new FormUrlEncodedContent(new[]
-                {
-                    new KeyValuePair<string, string>("creatureId", spawn.CreatureId + ""),  
-                    new KeyValuePair<string, string>("worldId", spawn.WorldId + ""),
-                    new KeyValuePair<string, string>("locationId", spawn.LocationId.HasValue ? spawn.LocationId.Value + "" : string.Empty),  
-                    new KeyValuePair<string, string>("timeMinUtc", spawn.TimeMinUtc + ""),
-                    new KeyValuePair<string, string>("timeMaxUtc", spawn.TimeMaxUtc + "")
-                }));
+                var response = await client.PostAsync("api/spawns", new StringContent(JsonConvert.SerializeObject(spawn), Encoding.UTF8, "application/json"));
 
                 return response.IsSuccessStatusCode;
             }
@@ -94,16 +85,7 @@ namespace BossrScraper
                 client.BaseAddress = new Uri(Configuration["Data:API:Uri"]);
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token.Token_Type, Token.Access_Token);
                 
-                // ToDo: json
-                //var response = await client.PostAsync("api/creatures", new StringContent(JsonConvert.SerializeObject(creature), Encoding.UTF8, "application/json"));
-                var response = await client.PostAsync("api/creatures", new FormUrlEncodedContent(new[]
-                {
-                    new KeyValuePair<string, string>("id", creature.Id + ""),
-                    new KeyValuePair<string, string>("name", creature.Name),
-                    new KeyValuePair<string, string>("categoryId", creature.CategoryId.HasValue ? creature.CategoryId.Value + "" : string.Empty), 
-                    new KeyValuePair<string, string>("hoursBetweenEachSpawnMin", creature.HoursBetweenEachSpawnMin + ""),
-                    new KeyValuePair<string, string>("hoursBetweenEachSpawnMax", creature.HoursBetweenEachSpawnMax + "")
-                }));
+                var response = await client.PostAsync("api/creatures", new StringContent(JsonConvert.SerializeObject(creature), Encoding.UTF8, "application/json"));
 
                 return response.IsSuccessStatusCode;
             }
@@ -139,18 +121,8 @@ namespace BossrScraper
             {
                 client.BaseAddress = new Uri(Configuration["Data:API:Uri"]);
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token.Token_Type, Token.Access_Token);
-
-                // ToDo: json
-                //var response = await client.PutAsync($"api/worlds/{world.Id}", new StringContent(JsonConvert.SerializeObject(world), Encoding.UTF8, "application/json"));
-                var response = await client.PutAsync($"api/worlds/{world.Id}", new FormUrlEncodedContent(new []
-                {
-                    new KeyValuePair<string, string>("id", world.Id + ""),
-                    new KeyValuePair<string, string>("name", world.Name),
-                    new KeyValuePair<string, string>("monitored", world.Monitored + ""),
-                    new KeyValuePair<string, string>("lastdaykills", world.LastDayKills + ""),
-                    new KeyValuePair<string, string>("lastdaydeaths", world.LastDayDeaths + ""),
-                    new KeyValuePair<string, string>("lastscrapetime", world.LastScrapeTime + ""),    
-                }));
+                
+                var response = await client.PutAsync($"api/worlds/{world.Id}", new StringContent(JsonConvert.SerializeObject(world), Encoding.UTF8, "application/json"));
 
                 return response.IsSuccessStatusCode;
             }

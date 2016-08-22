@@ -18,7 +18,7 @@ namespace BossrCoreAPI.Controllers
         {
         }
 
-        public override async Task<IActionResult> PostEntity(Spawn entity)
+        public override async Task<IActionResult> PostEntity([FromBody]Spawn entity)
         {
             if (entity.TimeMinUtc.Ticks == 0 || entity.TimeMaxUtc.Ticks == 0)
                 return BadRequest();
@@ -32,7 +32,7 @@ namespace BossrCoreAPI.Controllers
             return await base.PostEntity(entity);
         }
 
-        public override async Task<IActionResult> PutEntity(Spawn entity)
+        public override async Task<IActionResult> PutEntity([FromBody]Spawn entity)
         {
             if (entity.TimeMinUtc.Ticks == 0 || entity.TimeMaxUtc.Ticks == 0)
                 return BadRequest();

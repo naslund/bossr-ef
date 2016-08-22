@@ -31,11 +31,11 @@ namespace BossrScraper
         public static async Task Run()
         {
             Console.Title = "Bossr Autoscrape | Write 'exit' to close the program | Write 'force' to scrape";
-
+            
             Timer timer = new Timer(async state =>
             {
                 await ScrapeEvent(state);
-            }, null, TimeSpan.FromSeconds(30), TimeSpan.FromMinutes(30));
+            }, null, TimeSpan.FromSeconds(10), TimeSpan.FromMinutes(30));
 
             while (true)
             {

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using BossrCoreAPI.Models.Identity;
+using BossrCoreAPI.Models.Requests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -41,17 +42,17 @@ namespace BossrCoreAPI.Controllers.Identity
         }
         
         [HttpPost]
-        public async Task<IActionResult> PostUser(string username, string password)
+        public async Task<IActionResult> PostUser([FromBody]UserRequest userRequest)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            if (username == null || password == null)
+            if (userRequest.Username == null || userRequest.Password == null)
                 return BadRequest();
 
-            IdentityResult result = await usermanager.CreateAsync(new ApplicationUser { UserName = username }, password);
+            IdentityResult result = await usermanager.CreateAsync(new ApplicationUser { UserName = userRequest.Username }, userRequest.Password);
             if (result.Succeeded)
-                return Ok(usermanager.FindByNameAsync(username)); // Todo: 201 Created
+                return Ok(usermanager.FindByNameAsync(userRequest.Username)); // Todo: 201 Created
 
             return BadRequest(result.Errors);
         }
@@ -71,19 +72,19 @@ namespace BossrCoreAPI.Controllers.Identity
         }
         
         [HttpPut("{id}/password")]
-        public async Task<IActionResult> ChangeUserPassword(int id, string oldPassword, string newPassword)
+        public async Task<IActionResult> ChangeUserPassword(int id, [FromBody]PasswordRequest passwordRequest)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            if (oldPassword == null || newPassword == null)
+            if (passwordRequest.OldPassword == null || passwordRequest.NewPassword == null)
                 return BadRequest();
 
             ApplicationUser user = await usermanager.FindByIdAsync(id.ToString());
             if (user == null)
                 return NotFound();
 
-            IdentityResult result = await usermanager.ChangePasswordAsync(user, oldPassword, newPassword);
+            IdentityResult result = await usermanager.ChangePasswordAsync(user, passwordRequest.OldPassword, passwordRequest.NewPassword);
             if (result.Succeeded)
                 return Ok();
 

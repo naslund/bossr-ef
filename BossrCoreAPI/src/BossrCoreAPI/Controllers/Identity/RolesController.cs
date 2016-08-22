@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using BossrCoreAPI.Models.Identity;
+using BossrCoreAPI.Models.Requests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -17,13 +18,13 @@ namespace BossrCoreAPI.Controllers.Identity
         {
             this.rolemanager = rolemanager;
         }
-        
+
         [HttpGet]
         public async Task<IActionResult> GetRoles()
         {
             return Ok(await rolemanager.Roles.ToListAsync());
         }
-        
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetRole(int id)
         {
@@ -36,33 +37,33 @@ namespace BossrCoreAPI.Controllers.Identity
 
             return Ok(role);
         }
-        
+
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutRole(int id, string name)
+        public async Task<IActionResult> PutRole(int id, [FromBody]RoleRequest roleRequest)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            
+
             ApplicationRole role = await rolemanager.FindByIdAsync(id.ToString());
             if (role == null)
                 return BadRequest();
 
-            role.Name = name;
-            
+            role.Name = roleRequest.Name;
+
             IdentityResult result = await rolemanager.UpdateAsync(role);
             if (result.Succeeded)
                 return Ok();
 
             return BadRequest(result.Errors);
         }
-        
+
         [HttpPost]
-        public async Task<IActionResult> PostRole(string name)
+        public async Task<IActionResult> PostRole([FromBody]RoleRequest roleRequest)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            ApplicationRole role = new ApplicationRole { Name = name };
+            ApplicationRole role = new ApplicationRole { Name = roleRequest.Name };
 
             IdentityResult result = await rolemanager.CreateAsync(role);
             if (result.Succeeded)
@@ -70,7 +71,7 @@ namespace BossrCoreAPI.Controllers.Identity
 
             return BadRequest(result.Errors);
         }
-        
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRole(int id)
         {
