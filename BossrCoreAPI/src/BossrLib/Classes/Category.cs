@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using BossrLib.Interfaces;
+using Newtonsoft.Json;
 
 namespace BossrLib.Classes
 {
@@ -8,6 +9,7 @@ namespace BossrLib.Classes
         public int Id { get; set; }
         public string Name { get; set; }
 
+        [JsonIgnore]
         public List<Creature> Creatures { get; set; }
     }
 }
