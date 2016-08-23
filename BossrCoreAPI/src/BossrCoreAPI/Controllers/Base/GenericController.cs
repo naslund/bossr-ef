@@ -1,4 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using BossrCoreAPI.Models.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -70,6 +73,13 @@ namespace BossrCoreAPI.Controllers.Base
             await context.SaveChangesAsync();
 
             return Ok(entity);
+        }
+
+        [HttpGet("random")]
+        public async Task<IActionResult> GetRandomEntity()
+        {
+            List<T> entities = await context.Set<T>().ToListAsync();
+            return Ok(entities.ElementAtOrDefault(new Random().Next(0, entities.Count)));
         }
     }
 }

@@ -17,16 +17,18 @@ namespace BossrCoreAPI
 
         public Startup(IHostingEnvironment env)
         {
-            var builder = new ConfigurationBuilder()
+            Configuration = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-                .AddEnvironmentVariables();
-            Configuration = builder.Build();
+                .AddEnvironmentVariables()
+                .Build();
         }
         
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
+
             services.AddEntityFrameworkSqlServer()
                 .AddDbContext<ApplicationDbContext>(options => 
                     options.UseSqlServer(Configuration["Data:ConnectionStrings:AzureConnection"]));
@@ -38,12 +40,12 @@ namespace BossrCoreAPI
                 .AddDefaultTokenProviders();
 
             services.AddOpenIddict<ApplicationUser, ApplicationRole, ApplicationDbContext, int>()
-                .EnableTokenEndpoint("/connect/token")
+                .EnableTokenEndpoint()
                 .AllowPasswordFlow()
                 .AllowRefreshTokenFlow()
                 .UseJsonWebTokens()
                 .AddSigningKey(SigningKey);
-
+            
             services.AddMvc();
         }
         
@@ -51,6 +53,10 @@ namespace BossrCoreAPI
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
 
             app.UseOpenIddict();
 
