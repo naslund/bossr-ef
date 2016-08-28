@@ -18,13 +18,13 @@ namespace BossrCoreAPI.Controllers
         }
 
         [HttpGet("{id}/categories")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetCreatureCategory(int id)
         {
             Creature creature = await context.Creatures.Include(x => x.Category).SingleOrDefaultAsync(x => x.Id == id);
             if (creature?.Category == null)
                 return NotFound();
-
-            creature.Category.Creatures = null;
+            
             return Ok(creature.Category);
         }
 
@@ -58,6 +58,7 @@ namespace BossrCoreAPI.Controllers
         }
 
         [HttpGet("{id}/spawns")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetCreatureSpawns(int id)
         {
             if (await context.Creatures.AnyAsync(x => x.Id == id) == false)
@@ -67,6 +68,7 @@ namespace BossrCoreAPI.Controllers
         }
 
         [HttpGet("{id}/locations")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetCreatureLocations(int id)
         {
             if (await context.Creatures.AnyAsync(x => x.Id == id) == false)

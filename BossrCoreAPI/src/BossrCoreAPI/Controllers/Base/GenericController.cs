@@ -6,6 +6,7 @@ using BossrCoreAPI.Models.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BossrLib.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BossrCoreAPI.Controllers.Base
 {
@@ -19,12 +20,14 @@ namespace BossrCoreAPI.Controllers.Base
         }
         
         [HttpGet]
+        [AllowAnonymous]
         public virtual async Task<IActionResult> GetEntities()
         {
             return Ok(await context.Set<T>().ToListAsync());
         }
         
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public virtual async Task<IActionResult> GetEntity(int id)
         {
             T entity = await context.Set<T>().SingleOrDefaultAsync(x => x.Id == id);
@@ -76,6 +79,7 @@ namespace BossrCoreAPI.Controllers.Base
         }
 
         [HttpGet("random")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetRandomEntity()
         {
             List<T> entities = await context.Set<T>().ToListAsync();

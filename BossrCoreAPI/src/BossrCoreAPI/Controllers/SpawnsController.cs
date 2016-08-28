@@ -47,6 +47,7 @@ namespace BossrCoreAPI.Controllers
         }
 
         [HttpGet("recent")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetRecentSpawns()
         {
             DateTimeOffset threeDaysAgo = new DateTimeOffset(DateTime.UtcNow).AddDays(-3);
@@ -55,13 +56,13 @@ namespace BossrCoreAPI.Controllers
         }
 
         [HttpGet("{id}/worlds")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetSpawnWorld(int id)
         {
             Spawn spawn = await context.Spawns.Include(x => x.World).SingleOrDefaultAsync(x => x.Id == id);
             if (spawn?.World == null)
                 return NotFound();
-
-            spawn.World.Spawns = null;
+            
             return Ok(spawn.World);
         }
 
@@ -82,13 +83,13 @@ namespace BossrCoreAPI.Controllers
         }
 
         [HttpGet("{id}/creatures")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetSpawnCreature(int id)
         {
             Spawn spawn = await context.Spawns.Include(x => x.Creature).SingleOrDefaultAsync(x => x.Id == id);
             if (spawn?.Creature == null)
                 return NotFound();
-
-            spawn.Creature.Spawns = null;
+            
             return Ok(spawn.Creature);
         }
 
@@ -109,13 +110,13 @@ namespace BossrCoreAPI.Controllers
         }
 
         [HttpGet("{id}/locations")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetSpawnLocation(int id)
         {
             Spawn spawn = await context.Spawns.Include(x => x.Location).SingleOrDefaultAsync(x => x.Id == id);
             if (spawn?.Location == null)
                 return NotFound();
-
-            spawn.Location.Spawns = null;
+            
             return Ok(spawn.Location);
         }
 

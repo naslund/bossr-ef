@@ -19,6 +19,7 @@ namespace BossrCoreAPI.Controllers
         }
         
         [HttpGet("{id}/spawns")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetWorldSpawns(int id)
         {
             if (context.Worlds.Any(x => x.Id == id) == false)
@@ -28,6 +29,7 @@ namespace BossrCoreAPI.Controllers
         }
 
         [HttpGet("{id}/spawns/recent")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetRecentSpawns(int id)
         {
             DateTimeOffset threeDaysAgo = new DateTimeOffset(DateTime.UtcNow).AddDays(-3);

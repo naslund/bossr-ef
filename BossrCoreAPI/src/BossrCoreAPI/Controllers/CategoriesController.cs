@@ -19,6 +19,7 @@ namespace BossrCoreAPI.Controllers
         }
         
         [HttpGet("{id}/creatures")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetCategoryCreatures(int id)
         {
             if (await context.Categories.AnyAsync(x => x.Id == id) == false)

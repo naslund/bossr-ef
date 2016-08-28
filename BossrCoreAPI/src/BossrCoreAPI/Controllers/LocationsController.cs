@@ -19,6 +19,7 @@ namespace BossrCoreAPI.Controllers
         }
 
         [HttpGet("{id}/spawns")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetLocationSpawns(int id)
         {
             if (context.Locations.Any(x => x.Id == id) == false)
@@ -28,6 +29,7 @@ namespace BossrCoreAPI.Controllers
         }
 
         [HttpGet("{id}/creatures")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetLocationCreature(int id)
         {
             Location location = await context.Locations.SingleOrDefaultAsync(x => x.Id == id);
