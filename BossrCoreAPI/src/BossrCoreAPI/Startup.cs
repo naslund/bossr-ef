@@ -40,7 +40,7 @@ namespace BossrCoreAPI
                 .AddDefaultTokenProviders();
 
             services.AddOpenIddict<ApplicationUser, ApplicationRole, ApplicationDbContext, int>()
-                .EnableTokenEndpoint()
+                .EnableTokenEndpoint("/connect/token")
                 .AllowPasswordFlow()
                 .AllowRefreshTokenFlow()
                 .UseJsonWebTokens()
