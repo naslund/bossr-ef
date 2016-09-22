@@ -1,11 +1,17 @@
 ﻿using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using AspNet.Security.OpenIdConnect.Extensions;
+using AspNet.Security.OpenIdConnect.Server;
 using BossrCoreAPI.Models.Identity;
 using BossrCoreAPI.Models.Requests;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Builder;
 
 namespace BossrCoreAPI.Controllers.Identity
 {
@@ -140,6 +146,66 @@ namespace BossrCoreAPI.Controllers.Identity
                 return Ok();
 
             return BadRequest(result.Errors);
+        }
+
+        [HttpPost("~/connect/token")]
+        [Produces("application/json")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Exchange()
+        {
+            var request = HttpContext.GetOpenIdConnectRequest();
+
+            if (request.IsPasswordGrantType())
+            {
+                var user = await usermanager.FindByNameAsync(request.Username);
+                if (user == null)
+                {
+                    return BadRequest(new OpenIdConnectResponse
+                    {
+                        Error = OpenIdConnectConstants.Errors.InvalidGrant,
+                        ErrorDescription = "The username/password couple is invalid."
+                    });
+                }
+
+                // Ensure the password is valid.
+                if (!await usermanager.CheckPasswordAsync(user, request.Password))
+                {
+                    if (usermanager.SupportsUserLockout)
+                    {
+                        await usermanager.AccessFailedAsync(user);
+                    }
+
+                    return BadRequest(new OpenIdConnectResponse
+                    {
+                        Error = OpenIdConnectConstants.Errors.InvalidGrant,
+                        ErrorDescription = "The username/password couple is invalid."
+                    });
+                }
+
+                if (usermanager.SupportsUserLockout)
+                {
+                    await usermanager.ResetAccessFailedCountAsync(user);
+                }
+
+                var identity = await usermanager.CreateIdentityAsync(user, request.GetScopes());
+
+                // Create a new authentication ticket holding the user identity.
+                var ticket = new AuthenticationTicket(
+                    new ClaimsPrincipal(identity),
+                    new AuthenticationProperties(),
+                    OpenIdConnectServerDefaults.AuthenticationScheme);
+
+                ticket.SetResources(request.GetResources());
+                ticket.SetScopes(request.GetScopes());
+
+                return SignIn(ticket.Principal, ticket.Properties, ticket.AuthenticationScheme);
+            }
+
+            return BadRequest(new OpenIdConnectResponse
+            {
+                Error = OpenIdConnectConstants.Errors.UnsupportedGrantType,
+                ErrorDescription = "The specified grant type is not supported."
+            });
         }
     }
 }
