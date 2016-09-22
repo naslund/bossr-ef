@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BossrCoreAPI.Controllers.Base;
@@ -35,6 +36,20 @@ namespace BossrCoreAPI.Controllers
             DateTimeOffset threeDaysAgo = new DateTimeOffset(DateTime.UtcNow).AddDays(-3);
 
             return Ok(await context.Spawns.Where(x => x.WorldId == id).Where(x => x.TimeMaxUtc > threeDaysAgo).ToListAsync());
+        }
+
+        [HttpGet("{id}/spawns/latest")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetLatestSpawns(int id)
+        {
+            List<Spawn> spawns = new List<Spawn>();
+            var creatures = await context.Creatures.Include(x => x.Locations).ToListAsync();
+            var allSpawns = await context.Spawns.OrderBy(x => x.TimeMaxUtc).ToListAsync();
+
+            foreach (var creature in creatures)
+                spawns.AddRange(allSpawns.Where(x => x.CreatureId == creature.Id).Take(creature.Locations.Count));
+
+            return Ok(spawns);
         }
     }
 }
