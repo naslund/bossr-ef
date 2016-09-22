@@ -44,7 +44,7 @@ namespace BossrCoreAPI.Controllers
         {
             List<Spawn> spawns = new List<Spawn>();
             var creatures = await context.Creatures.Include(x => x.Locations).ToListAsync();
-            var allSpawns = await context.Spawns.OrderBy(x => x.TimeMaxUtc).ToListAsync();
+            var allSpawns = await context.Spawns.Where(x => x.WorldId == id).OrderByDescending(x => x.TimeMaxUtc).ToListAsync();
 
             foreach (var creature in creatures)
                 spawns.AddRange(allSpawns.Where(x => x.CreatureId == creature.Id).Take(creature.Locations.Count));
