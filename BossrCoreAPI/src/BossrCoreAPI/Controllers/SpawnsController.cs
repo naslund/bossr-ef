@@ -32,7 +32,7 @@ namespace BossrCoreAPI.Controllers
             return await base.PostEntity(entity);
         }
 
-        public override async Task<IActionResult> PutEntity([FromBody]Spawn entity)
+        public override async Task<IActionResult> PutEntity(int id, [FromBody]Spawn entity)
         {
             if (entity.TimeMinUtc.Ticks == 0 || entity.TimeMaxUtc.Ticks == 0)
                 return BadRequest();
@@ -43,7 +43,7 @@ namespace BossrCoreAPI.Controllers
             if (entity.TimeMinUtc > entity.TimeMaxUtc)
                 return BadRequest(new { message = "TimeMinUtc can only occur before TimeMaxUtc" });
 
-            return await base.PutEntity(entity);
+            return await base.PutEntity(id, entity);
         }
 
         [HttpGet("recent")]

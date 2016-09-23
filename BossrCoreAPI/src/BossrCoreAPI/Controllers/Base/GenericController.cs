@@ -38,10 +38,12 @@ namespace BossrCoreAPI.Controllers.Base
         }
 
         [HttpPut("{id}")]
-        public virtual async Task<IActionResult> PutEntity([FromBody]T entity)
+        public virtual async Task<IActionResult> PutEntity(int id, [FromBody]T entity)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
+
+            entity.Id = id;
 
             if (await context.Set<T>().AnyAsync(x => x.Id == entity.Id) == false)
                 return NotFound();
