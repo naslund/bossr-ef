@@ -49,7 +49,15 @@ namespace BossrScraper
 
         private static async Task ScrapeEvent(object state)
         {
-            await Scraper.ScrapeAllWorlds();
+            try
+            {
+                await Scraper.ScrapeAllWorlds();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"{DateTime.UtcNow} UTC: Error occured during scrape.");
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 }
